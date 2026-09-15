@@ -107,7 +107,7 @@ export default function DoctorTeam() {
                 to={`/book?doctor=${encodeURIComponent(doctor.name)}`}
                 className="w-full py-2.5 px-4 rounded-xl bg-muted hover:bg-muted/80 text-foreground text-xs font-semibold border border-border transition-colors flex items-center justify-center gap-1.5"
               >
-                <span>Book with {doctor.name.split(" ")[1]}</span>
+                <span>Book with Dr. {doctor.name.split(" ")[1]}</span>
                 <ArrowUpRight className="size-3.5 text-muted-foreground" />
               </Link>
             </div>
