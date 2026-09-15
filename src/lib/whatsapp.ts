@@ -30,21 +30,35 @@ export function whatsappUrl(number: string, text = ""): string {
 }
 
 /**
- * Props to spread on an <a> that opens WhatsApp. On phones the link must be
- * same-tab for the app hand-off (new-tab opens show the "Install WhatsApp"
- * page); on desktop it opens in a new tab so the site stays open.
+ * Props to spread on an <a> that opens WhatsApp. On phones the link is
+ * same-tab AND the click is routed through openWhatsApp(): some mobile
+ * browsers (Brave on iOS, for one) break the universal-link hand-off for
+ * direct wa.me taps — they load the api.whatsapp.com web page instead, whose
+ * "Open WhatsApp" button is then blocked too. Navigating via location.href
+ * from the click handler (the same path the booking/contact forms use, which
+ * is verified working on those devices) opens the app reliably. Desktop keeps
+ * the plain new-tab link so the site stays open.
  */
 export function whatsappAnchorProps(
   number: string,
   text = "",
-): { href: string; target?: string; rel?: string } {
-  if (isMobileDevice()) {
-    return { href: whatsappUrl(number, text) };
-  }
+): {
+  href: string;
+  target?: string;
+  rel?: string;
+  onClick: (event: { preventDefault(): void }) => void;
+} {
   return {
     href: whatsappUrl(number, text),
-    target: "_blank",
-    rel: "noopener noreferrer",
+    onClick: (event) => {
+      if (isMobileDevice()) {
+        event.preventDefault();
+        openWhatsApp(number, text);
+      }
+    },
+    ...(isMobileDevice()
+      ? {}
+      : { target: "_blank", rel: "noopener noreferrer" }),
   };
 }
 

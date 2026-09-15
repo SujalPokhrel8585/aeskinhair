@@ -64,6 +64,11 @@ export const DEFAULT_FOOTER_MENU_ITEMS: FooterMenuItem[] = [
         external: true,
       },
       {
+        text: "YouTube",
+        url: CLINIC_INFO.socials.youtube,
+        external: true,
+      },
+      {
         text: "Google Maps",
         url: "https://www.google.com/maps/place/Aesthetic+Essence+Skin+and+Hair+Clinic/@27.7353999,85.3178899,17z/data=!4m6!3m5!1s0x39eb1960445007ff:0x4b83485b2b2cb147!8m2!3d27.7353999!4d85.3178899!16s%2Fg%2F11wqy376v5",
         external: true,

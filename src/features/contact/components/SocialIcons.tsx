@@ -48,6 +48,23 @@ function TikTokIcon(props: React.SVGProps<SVGSVGElement>) {
   );
 }
 
+function YoutubeIcon(props: React.SVGProps<SVGSVGElement>) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      {...props}
+    >
+      <path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17" />
+      <path d="m10 15 5-3-5-3z" />
+    </svg>
+  );
+}
+
 export function SocialIcons() {
   return (
     <div className="mt-8 pt-6 border-t border-border">
@@ -81,6 +98,15 @@ export function SocialIcons() {
           title="TikTok"
         >
           <TikTokIcon className="size-4.5" />
+        </a>
+        <a
+          href={CLINIC_INFO.socials.youtube}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="size-10 rounded-full bg-muted hover:bg-[#FF0000] hover:text-white text-foreground flex items-center justify-center border border-border transition-all duration-300 cursor-pointer shadow-xs hover:shadow-md"
+          title="YouTube"
+        >
+          <YoutubeIcon className="size-4.5" />
         </a>
       </div>
     </div>
