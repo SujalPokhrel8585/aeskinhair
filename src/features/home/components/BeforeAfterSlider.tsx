@@ -8,6 +8,8 @@ interface BeforeAfterSliderProps extends React.HTMLAttributes<HTMLDivElement> {
   afterSrc: string;
   beforeSrcset?: string;
   afterSrcset?: string;
+  /** Passed through to both <img sizes>. Defaults to the historical hint. */
+  sizes?: string;
   beforeLabel?: string;
   afterLabel?: string;
   beforeAlt?: string;
@@ -26,6 +28,7 @@ export const BeforeAfterSlider = React.forwardRef<
       afterSrc,
       beforeSrcset,
       afterSrcset,
+      sizes = "(max-width: 640px) 400px, (max-width: 1024px) 800px, 1200px",
       beforeLabel = "Before",
       afterLabel = "After",
       beforeAlt = "Before treatment",
@@ -46,6 +49,32 @@ export const BeforeAfterSlider = React.forwardRef<
       setPosition(Math.min(100, Math.max(0, percent)));
     }, []);
 
+    // pointermove fires faster than the display refreshes (high-rate
+    // touchscreens can emit hundreds of events/second). Coalesce them into a
+    // single state update per animation frame — identical behaviour, but the
+    // React re-render (and clip-path repaint) runs at most once per frame.
+    const pendingClientX = React.useRef<number | null>(null);
+    const rafId = React.useRef<number | null>(null);
+    React.useEffect(() => {
+      return () => {
+        if (rafId.current !== null) window.cancelAnimationFrame(rafId.current);
+      };
+    }, []);
+    const scheduleUpdate = React.useCallback(
+      (clientX: number) => {
+        pendingClientX.current = clientX;
+        if (rafId.current !== null) return;
+        rafId.current = window.requestAnimationFrame(() => {
+          rafId.current = null;
+          if (pendingClientX.current !== null) {
+            updatePosition(pendingClientX.current);
+            pendingClientX.current = null;
+          }
+        });
+      },
+      [updatePosition],
+    );
+
     const handlePointerDown = (
       e: React.PointerEvent<HTMLDivElement | HTMLButtonElement>,
     ) => {
@@ -59,7 +88,7 @@ export const BeforeAfterSlider = React.forwardRef<
       e: React.PointerEvent<HTMLDivElement | HTMLButtonElement>,
     ) => {
       if (!isDragging) return;
-      updatePosition(e.clientX);
+      scheduleUpdate(e.clientX);
     };
 
     const endDrag = (
@@ -86,7 +115,10 @@ export const BeforeAfterSlider = React.forwardRef<
           else if (forwardedRef) forwardedRef.current = node;
         }}
         className={cn(
-          "relative aspect-4/3 w-full overflow-hidden rounded-2xl border border-border bg-muted select-none touch-none sm:aspect-16/10",
+          // touch-pan-y: vertical swipes still scroll the page over the big
+          // slider; horizontal drags are captured (pointercancel ends the
+          // drag cleanly when the browser takes over for a vertical scroll).
+          "relative aspect-4/3 w-full overflow-hidden rounded-2xl border border-border bg-muted select-none touch-pan-y sm:aspect-16/10",
           className,
         )}
         onPointerDown={handlePointerDown}
@@ -98,8 +130,10 @@ export const BeforeAfterSlider = React.forwardRef<
         <img
           src={afterSrc}
           srcSet={afterSrcset}
-          sizes="(max-width: 640px) 400px, (max-width: 1024px) 800px, 1200px"
+          sizes={sizes}
           alt={afterAlt}
+          loading="lazy"
+          decoding="async"
           draggable={false}
           className="absolute inset-0 size-full object-cover object-top"
         />
@@ -111,8 +145,10 @@ export const BeforeAfterSlider = React.forwardRef<
           <img
             src={beforeSrc}
             srcSet={beforeSrcset}
-            sizes="(max-width: 640px) 400px, (max-width: 1024px) 800px, 1200px"
+            sizes={sizes}
             alt={beforeAlt}
+            loading="lazy"
+            decoding="async"
             draggable={false}
             className="absolute inset-0 size-full object-cover object-top"
           />
