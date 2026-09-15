@@ -11,10 +11,16 @@ export const validators: Record<string, (v: string) => string> = {
     return "";
   },
   email: (v) => {
-    if (!v.trim()) return "Email address is required.";
+    if (!v.trim()) return ""; // optional — but if given, must be valid
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(v.trim()))
       return "Please enter a valid email address (e.g. you@example.com).";
+    return "";
+  },
+  phone: (v) => {
+    if (!v.trim()) return "Phone / WhatsApp number is required.";
+    const digits = v.replace(/\D/g, "");
+    if (digits.length < 9) return "Please enter a valid phone number.";
     return "";
   },
   message: (v) => {
@@ -29,11 +35,12 @@ export function buildWhatsAppMessage(form: ContactFormData): string {
     `New website inquiry`,
     ``,
     `Name: ${form.name}`,
-    `Email: ${form.email}`,
+    `Phone: ${form.phone}`,
+    form.email ? `Email: ${form.email}` : null,
     `Topic: ${form.subject}`,
     ``,
     `Message:`,
     form.message,
-  ];
+  ].filter(Boolean);
   return lines.join("\n");
 }

@@ -4,6 +4,7 @@ import { ArrowRight, Calendar, Stethoscope, Star, MessageCircle, MapPin } from "
 import { CLINIC_INFO } from "@/constants";
 import { useTheme } from "@/components/theme/ThemeProvider";
 import { getPerfTier } from "@/lib/deviceCapability";
+import { whatsappUrl } from "@/lib/whatsapp";
 import stethoscopeLight from "@/assets/stethoscope-light.webp";
 import stethoscopeDark from "@/assets/stethoscope-dark.webp";
 import {
@@ -131,7 +132,7 @@ export default function Hero() {
                   Get Direction
                 </a>
                 <a
-                  href={CLINIC_INFO.socials.whatsapp}
+                  href={whatsappUrl(CLINIC_INFO.whatsappNumber)}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="relative inline-flex items-center gap-1 font-semibold text-primary underline-offset-2 hover:underline"

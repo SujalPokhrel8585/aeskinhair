@@ -149,7 +149,7 @@ export function ContactForm() {
                     placeholder="e.g. Shah Rukh Khan"
                     autoComplete="name"
                     required
-                    className={`w-full px-4 py-2.5 rounded-2xl border text-sm transition-all placeholder:text-muted-foreground focus:outline-none ${
+                    className={`w-full px-4 py-2.5 rounded-2xl border text-sm transition-all placeholder:text-muted-foreground focus:outline-none dark:[color-scheme:dark] ${
                       touched.name && getError("name")
                         ? "border-rose-400 bg-rose-50/20 focus:border-rose-500 focus:ring-2 focus:ring-rose-500/20"
                         : "bg-muted border-black/15 dark:border-white/20 focus:ring-2 focus:ring-ring/20 focus:border-ring"
@@ -164,33 +164,67 @@ export function ContactForm() {
 
                 <div className="space-y-1.5">
                   <label
-                    htmlFor="email"
+                    htmlFor="phone"
                     className="block text-xs font-semibold text-foreground uppercase tracking-wider"
                   >
-                    Email Address *
+                    Phone / WhatsApp *
                   </label>
                   <input
-                    id="email"
-                    type="email"
-                    name="email"
-                    value={form.email}
+                    id="phone"
+                    type="tel"
+                    name="phone"
+                    value={form.phone}
                     onChange={handleChange}
                     onBlur={handleBlur}
-                    placeholder="you@example.com"
-                    autoComplete="email"
+                    placeholder="+977 98xxxxxxxx"
+                    autoComplete="tel"
                     required
-                    className={`w-full px-4 py-2.5 rounded-2xl border text-sm transition-all placeholder:text-muted-foreground focus:outline-none ${
-                      touched.email && getError("email")
+                    className={`w-full px-4 py-2.5 rounded-2xl border text-sm transition-all placeholder:text-muted-foreground focus:outline-none dark:[color-scheme:dark] ${
+                      touched.phone && getError("phone")
                         ? "border-rose-400 bg-rose-50/20 focus:border-rose-500 focus:ring-2 focus:ring-rose-500/20"
                         : "bg-muted border-black/15 dark:border-white/20 focus:ring-2 focus:ring-ring/20 focus:border-ring"
                     }`}
                   />
-                  {touched.email && getError("email") && (
+                  {touched.phone && getError("phone") && (
                     <p className="text-[11px] text-rose-600 font-medium mt-1">
-                      {getError("email")}
+                      {getError("phone")}
                     </p>
                   )}
                 </div>
+              </div>
+
+              {/* Email – optional (WhatsApp-first: phone is the primary way
+                  we reach people back) */}
+              <div className="space-y-1.5">
+                <label
+                  htmlFor="email"
+                  className="block text-xs font-semibold text-foreground uppercase tracking-wider"
+                >
+                  Email Address{" "}
+                  <span className="text-muted-foreground normal-case tracking-normal font-normal">
+                    (optional)
+                  </span>
+                </label>
+                <input
+                  id="email"
+                  type="email"
+                  name="email"
+                  value={form.email}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  placeholder="you@example.com"
+                  autoComplete="email"
+                  className={`w-full px-4 py-2.5 rounded-2xl border text-sm transition-all placeholder:text-muted-foreground focus:outline-none dark:[color-scheme:dark] ${
+                    touched.email && getError("email")
+                      ? "border-rose-400 bg-rose-50/20 focus:border-rose-500 focus:ring-2 focus:ring-rose-500/20"
+                      : "bg-muted border-black/15 dark:border-white/20 focus:ring-2 focus:ring-ring/20 focus:border-ring"
+                  }`}
+                />
+                {touched.email && getError("email") && (
+                  <p className="text-[11px] text-rose-600 font-medium mt-1">
+                    {getError("email")}
+                  </p>
+                )}
               </div>
 
               <div className="space-y-1.5">
@@ -231,7 +265,7 @@ export function ContactForm() {
                   onBlur={handleBlur}
                   placeholder="Tell us what you have in mind or describe your inquiry..."
                   required
-                  className={`w-full px-4 py-3 rounded-2xl border text-sm transition-all resize-none placeholder:text-muted-foreground focus:outline-none ${
+                  className={`w-full px-4 py-3 rounded-2xl border text-sm transition-all resize-none placeholder:text-muted-foreground focus:outline-none dark:[color-scheme:dark] ${
                     touched.message && getError("message")
                       ? "border-rose-400 bg-rose-50/20 focus:border-rose-500 focus:ring-2 focus:ring-rose-500/20"
                       : "bg-muted border-black/15 dark:border-white/20 focus:ring-2 focus:ring-ring/20 focus:border-ring"
