@@ -16,7 +16,7 @@ import FAQSection from "./components/FAQSection";
 import Seo from "@/components/seo/Seo";
 import { serviceSeo, serviceSchema } from "@/constants/seo";
 import { CLINIC_INFO } from "@/constants/clinic";
-import { whatsappUrl } from "@/lib/whatsapp";
+import { whatsappAnchorProps } from "@/lib/whatsapp";
 
 // Generic 4-step treatment journey shown on every service page. This is
 // deliberately non-clinical (no dosages/protocols), just the patient
@@ -83,7 +83,7 @@ export default function ServicePage() {
 
   const Icon = service.icon;
   const bookHref = `/book?service=${service.id}`;
-  const whatsappHref = whatsappUrl(
+  const whatsappProps = whatsappAnchorProps(
     CLINIC_INFO.whatsappNumber,
     `Hi AestheticEssence Clinic, I'm not sure which treatment is right for me. Can you help?`,
   );
@@ -183,9 +183,7 @@ export default function ServicePage() {
                 +977 976-7648659
               </a>
               <a
-                href={whatsappHref}
-                target="_blank"
-                rel="noopener noreferrer"
+                {...whatsappProps}
                 className="inline-flex w-full items-center justify-center gap-2 px-6 py-3 rounded-full text-sm font-semibold border border-border transition-colors text-foreground hover:border-ring sm:w-auto"
               >
                 Not sure which treatment? Chat with us
@@ -348,9 +346,7 @@ export default function ServicePage() {
                 Book This Treatment
               </Link>
               <a
-                href={whatsappHref}
-                target="_blank"
-                rel="noopener noreferrer"
+                {...whatsappProps}
                 className="px-6 py-3 rounded-full bg-primary-foreground/10 hover:bg-primary-foreground/20 text-primary-foreground font-semibold text-sm border border-primary-foreground/20 backdrop-blur-xs transition-all inline-flex items-center gap-2 justify-center whitespace-nowrap"
               >
                 Chat With Us on WhatsApp

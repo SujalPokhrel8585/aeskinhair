@@ -1,6 +1,6 @@
 import { MapPin, Clock, Phone, MessageCircle } from "lucide-react";
 import { CLINIC_INFO } from "@/constants";
-import { whatsappUrl } from "@/lib/whatsapp";
+import { whatsappAnchorProps } from "@/lib/whatsapp";
 import { SocialIcons } from "./SocialIcons";
 
 export function ContactInfo() {
@@ -60,9 +60,7 @@ export function ContactInfo() {
                 WhatsApp Us
               </h3>
               <a
-                href={whatsappUrl(CLINIC_INFO.whatsappNumber)}
-                target="_blank"
-                rel="noopener noreferrer"
+                {...whatsappAnchorProps(CLINIC_INFO.whatsappNumber)}
                 className="text-xs sm:text-sm text-muted-foreground hover:text-primary transition-colors"
               >
                 Message our front desk

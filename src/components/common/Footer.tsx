@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { Phone, MapPin, Clock } from "lucide-react";
+import { isMobileDevice } from "@/lib/whatsapp";
 import { SERVICES } from "@/features/services/data/servicesData";
 import {
   CLINIC_INFO,
@@ -104,7 +105,10 @@ export function Footer({
                     {link.external ? (
                       <a
                         href={link.url}
-                        target="_blank"
+                        // Same-tab on phones: required for WhatsApp's app
+                        // hand-off (new-tab opens show the "Install" page);
+                        // the back button returns here afterwards anyway.
+                        target={isMobileDevice() ? undefined : "_blank"}
                         rel="noopener noreferrer"
                         className="font-medium transition-colors hover:text-foreground"
                       >

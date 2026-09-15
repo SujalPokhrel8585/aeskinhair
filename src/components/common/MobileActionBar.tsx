@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { Calendar, MessageCircle, Phone } from "lucide-react";
 import { CLINIC_INFO } from "@/constants";
-import { whatsappUrl } from "@/lib/whatsapp";
+import { whatsappAnchorProps } from "@/lib/whatsapp";
 
 /**
  * Always-visible contact bar for phones/tablets: one-tap call, WhatsApp chat
@@ -23,9 +23,7 @@ export function MobileActionBar() {
           Call
         </a>
         <a
-          href={whatsappUrl(CLINIC_INFO.whatsappNumber)}
-          target="_blank"
-          rel="noopener noreferrer"
+          {...whatsappAnchorProps(CLINIC_INFO.whatsappNumber)}
           className="flex flex-col items-center justify-center gap-0.5 rounded-xl bg-[#25D366] py-2 text-xs font-semibold text-white transition-colors hover:bg-[#1fb857]"
           aria-label="Chat with us on WhatsApp"
         >
