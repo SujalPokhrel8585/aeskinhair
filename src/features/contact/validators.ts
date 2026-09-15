@@ -1,5 +1,4 @@
 import type { ContactFormData } from "@/types";
-import { WHATSAPP_NUMBER } from "@/constants";
 
 export const validators: Record<string, (v: string) => string> = {
   name: (v) => {
@@ -25,7 +24,7 @@ export const validators: Record<string, (v: string) => string> = {
   },
 };
 
-export function buildWhatsAppUrl(form: ContactFormData): string {
+export function buildWhatsAppMessage(form: ContactFormData): string {
   const lines = [
     `New website inquiry`,
     ``,
@@ -36,6 +35,5 @@ export function buildWhatsAppUrl(form: ContactFormData): string {
     `Message:`,
     form.message,
   ];
-  const text = encodeURIComponent(lines.join("\n"));
-  return `https://wa.me/${WHATSAPP_NUMBER}?text=${text}`;
+  return lines.join("\n");
 }

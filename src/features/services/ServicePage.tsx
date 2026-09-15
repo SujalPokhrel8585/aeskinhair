@@ -16,6 +16,7 @@ import FAQSection from "./components/FAQSection";
 import Seo from "@/components/seo/Seo";
 import { serviceSeo, serviceSchema } from "@/constants/seo";
 import { CLINIC_INFO } from "@/constants/clinic";
+import { whatsappUrl } from "@/lib/whatsapp";
 
 // Generic 4-step treatment journey shown on every service page. This is
 // deliberately non-clinical (no dosages/protocols), just the patient
@@ -82,9 +83,10 @@ export default function ServicePage() {
 
   const Icon = service.icon;
   const bookHref = `/book?service=${service.id}`;
-  const whatsappHref = `https://wa.me/${CLINIC_INFO.whatsappNumber}?text=${encodeURIComponent(
+  const whatsappHref = whatsappUrl(
+    CLINIC_INFO.whatsappNumber,
     `Hi AestheticEssence Clinic, I'm not sure which treatment is right for me. Can you help?`,
-  )}`;
+  );
   const related = SERVICES.filter(
     (s) => s.id !== service.id && s.category === service.category,
   )

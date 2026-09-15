@@ -1,5 +1,8 @@
 // Site-wide navigation routes and menu links.
 
+import { CLINIC_INFO } from "./clinic";
+import { whatsappUrl } from "@/lib/whatsapp";
+
 export interface NavItem {
   title: string;
   href: string;
@@ -67,7 +70,7 @@ export const DEFAULT_FOOTER_MENU_ITEMS: FooterMenuItem[] = [
       },
       {
         text: "WhatsApp",
-        url: "https://wa.me/9779767648659",
+        url: whatsappUrl(CLINIC_INFO.whatsappNumber),
         external: true,
       },
     ],

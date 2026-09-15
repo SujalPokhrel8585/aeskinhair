@@ -12,6 +12,12 @@ import { motion, AnimatePresence } from "motion/react"
 import Seo from "@/components/seo/Seo";
 import { seoForPath } from "@/constants/seo";
 import { WHATSAPP_NUMBER } from "@/constants";
+import { openWhatsApp } from "@/lib/whatsapp";
+import {
+  CLINIC_OPEN_HOUR,
+  CLINIC_CLOSE_HOUR,
+  formatHour12,
+} from "@/lib/clinicStatus";
 import { doctorData } from "@/features/doctors/data/doctorsData";
 import { SERVICES as ALL_SERVICES } from "@/services/servicesService";
 import {
@@ -61,6 +67,11 @@ const INITIAL_FORM: BookingFormData = {
   notes: "",
 };
 
+// ── Clinic hours (single source: src/lib/clinicStatus.ts) ──
+const OPEN_TIME = `${String(CLINIC_OPEN_HOUR).padStart(2, "0")}:00`; // "11:00"
+const CLOSE_TIME = `${String(CLINIC_CLOSE_HOUR).padStart(2, "0")}:00`; // "18:00"
+const HOURS_LABEL = `${formatHour12(CLINIC_OPEN_HOUR)} – ${formatHour12(CLINIC_CLOSE_HOUR)}`;
+
 // ── Validation ──
 const validators: Record<string, (v: string) => string> = {
   name: (v) => {
@@ -95,10 +106,23 @@ const validators: Record<string, (v: string) => string> = {
     if (selected < today) return "Please choose a future date.";
     return "";
   },
+  preferredTime: (v) => {
+    if (!v) return ""; // optional — but if given, must be within clinic hours
+    const [h, m] = v.split(":").map(Number);
+    const minutes = h * 60 + m;
+    if (
+      Number.isNaN(minutes) ||
+      minutes < CLINIC_OPEN_HOUR * 60 ||
+      minutes > CLINIC_CLOSE_HOUR * 60
+    ) {
+      return `Clinic hours are ${HOURS_LABEL} (Sun–Fri). Please pick a time within them.`;
+    }
+    return "";
+  },
   notes: () => "",
 };
 
-function buildWhatsAppUrl(form: BookingFormData): string {
+function buildWhatsAppMessage(form: BookingFormData): string {
   const lines = [
     `New Appointment Request – AestheticEssence Clinic`,
     ``,
@@ -113,8 +137,7 @@ function buildWhatsAppUrl(form: BookingFormData): string {
     form.notes ? `Notes:\n${form.notes}` : null,
   ].filter(Boolean);
 
-  const text = encodeURIComponent(lines.join("\n"));
-  return `https://wa.me/${WHATSAPP_NUMBER}?text=${text}`;
+  return lines.join("\n");
 }
 
 export default function BookAppointmentPage() {
@@ -185,18 +208,27 @@ export default function BookAppointmentPage() {
     );
   }
 
-  const allValid = ["name", "phone", "service", "preferredDate"].every(
-    (k) => !getError(k),
-  );
+  const allValid = [
+    "name",
+    "phone",
+    "service",
+    "preferredDate",
+    "preferredTime",
+  ].every((k) => !getError(k));
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setFormError("");
 
     const allTouched: Record<string, boolean> = {};
-    ["name", "phone", "service", "preferredDate", "email"].forEach(
-      (k) => (allTouched[k] = true),
-    );
+    [
+      "name",
+      "phone",
+      "service",
+      "preferredDate",
+      "preferredTime",
+      "email",
+    ].forEach((k) => (allTouched[k] = true));
     setTouched(allTouched);
 
     if (!allValid) {
@@ -207,8 +239,8 @@ export default function BookAppointmentPage() {
     setSubmitting(true);
     await new Promise((r) => setTimeout(r, 450));
 
-    const waUrl = buildWhatsAppUrl(form);
-    window.open(waUrl, "_blank", "noopener,noreferrer");
+    const waMessage = buildWhatsAppMessage(form);
+    openWhatsApp(WHATSAPP_NUMBER, waMessage);
 
     setSubmitting(false);
     setSent(true);
@@ -500,7 +532,7 @@ export default function BookAppointmentPage() {
                           value={form.service}
                           onChange={handleChange}
                           onBlur={handleBlur}
-                          className={`w-full px-4 py-2.5 rounded-2xl border text-sm focus:outline-none transition-all cursor-pointer ${
+                          className={`w-full px-4 py-2.5 rounded-2xl border text-sm focus:outline-none transition-all cursor-pointer dark:[color-scheme:dark] ${
                             touched.service && getError("service")
                               ? "border-rose-400 bg-rose-50/20 focus:border-rose-500 focus:ring-2 focus:ring-rose-500/20"
                               : "bg-muted border-black/15 dark:border-white/20 focus:ring-2 focus:ring-ring/20 focus:border-ring"
@@ -537,7 +569,7 @@ export default function BookAppointmentPage() {
                             name="preferredDoctor"
                             value={form.preferredDoctor}
                             onChange={handleChange}
-                            className="w-full px-4 py-2.5 rounded-2xl bg-muted border border-black/15 dark:border-white/20 text-sm focus:outline-none focus:ring-2 focus:ring-ring/20 focus:border-ring transition-all cursor-pointer appearance-none"
+                            className="w-full px-4 py-2.5 rounded-2xl bg-muted border border-black/15 dark:border-white/20 text-sm focus:outline-none focus:ring-2 focus:ring-ring/20 focus:border-ring transition-all cursor-pointer appearance-none dark:[color-scheme:dark]"
                           >
                             {DOCTORS.map((d) => (
                               <option key={d} value={d}>
@@ -594,9 +626,26 @@ export default function BookAppointmentPage() {
                             type="time"
                             name="preferredTime"
                             value={form.preferredTime}
+                            min={OPEN_TIME}
+                            max={CLOSE_TIME}
                             onChange={handleChange}
-                            className="w-full px-4 py-2.5 rounded-2xl bg-muted border border-black/15 dark:border-white/20 text-sm focus:outline-none dark:[color-scheme:dark] focus:ring-2 focus:ring-ring/20 focus:border-ring transition-all"
+                            onBlur={handleBlur}
+                            className={`w-full px-4 py-2.5 rounded-2xl border text-sm focus:outline-none dark:[color-scheme:dark] transition-all ${
+                              touched.preferredTime && getError("preferredTime")
+                                ? "border-rose-400 bg-rose-50/20 focus:border-rose-500 focus:ring-2 focus:ring-rose-500/20"
+                                : "bg-muted border-black/15 dark:border-white/20 focus:ring-2 focus:ring-ring/20 focus:border-ring"
+                            }`}
                           />
+                          {touched.preferredTime &&
+                          getError("preferredTime") ? (
+                            <p className="text-[11px] text-rose-600 font-medium mt-1">
+                              {getError("preferredTime")}
+                            </p>
+                          ) : (
+                            <p className="text-[11px] text-muted-foreground mt-1">
+                              Clinic hours: {HOURS_LABEL} (Sun–Fri)
+                            </p>
+                          )}
                         </div>
                       </div>
 

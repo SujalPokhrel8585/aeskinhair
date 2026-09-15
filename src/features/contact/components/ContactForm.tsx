@@ -4,7 +4,9 @@ import { Send, AlertCircle, CheckCircle2, Loader2 } from "lucide-react";
 
 import type { ContactFormData } from "@/types";
 import { INITIAL_FORM } from "@/features/contact/data/contactData";
-import { validators, buildWhatsAppUrl } from "@/features/contact/validators";
+import { validators, buildWhatsAppMessage } from "@/features/contact/validators";
+import { WHATSAPP_NUMBER } from "@/constants";
+import { openWhatsApp } from "@/lib/whatsapp";
 
 const SUBJECT_OPTIONS = [
   "General Inquiry",
@@ -62,8 +64,8 @@ export function ContactForm() {
     setSubmitting(true);
     await new Promise((resolve) => setTimeout(resolve, 500));
 
-    const waUrl = buildWhatsAppUrl(form);
-    window.open(waUrl, "_blank", "noopener,noreferrer");
+    const waMessage = buildWhatsAppMessage(form);
+    openWhatsApp(WHATSAPP_NUMBER, waMessage);
 
     setSubmitting(false);
     setSent(true);
@@ -203,7 +205,7 @@ export function ContactForm() {
                   name="subject"
                   value={form.subject}
                   onChange={handleChange}
-                  className="w-full px-4 py-2.5 rounded-2xl bg-muted border border-black/15 dark:border-white/20 text-sm focus:outline-none focus:ring-2 focus:ring-ring/20 focus:border-ring transition-all cursor-pointer"
+                  className="w-full px-4 py-2.5 rounded-2xl bg-muted border border-black/15 dark:border-white/20 text-sm focus:outline-none focus:ring-2 focus:ring-ring/20 focus:border-ring transition-all cursor-pointer dark:[color-scheme:dark]"
                 >
                   {SUBJECT_OPTIONS.map((option) => (
                     <option key={option} value={option}>
