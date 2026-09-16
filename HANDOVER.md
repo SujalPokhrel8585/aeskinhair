@@ -185,4 +185,3 @@ manually in `npm run preview`.
 | Map/sitemap point at wrong domain | §7 |
 | A service image is broken | Unsplash hotlink died — download a replacement into `public/`, update the `image` field in `servicesData.ts` |
 | Site completely down | Hosting/domain problem, not code — check the hosting dashboard and domain renewal |
-
