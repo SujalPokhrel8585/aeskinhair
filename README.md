@@ -116,7 +116,7 @@ scripts/                     # Asset + verification scripts
 `src/lib/deviceCapability.ts` classifies the device as `high`, `medium` or `low` (GPU/CPU/memory signals, reduced-motion, data-saver) and can be forced with `?perf=high|medium|low`. Low tier swaps the 3D hero for a static stethoscope image (`HeroStaticModel`); medium trims fixed-bar blur; every tier pauses hero animations off-screen (`.hero-offscreen`). CSS hooks: `.perf-low`, `.perf-mid` in `src/index.css`.
 
 ### 3. Service worker (`public/sw.js`)
-Registered only in production builds (`src/main.tsx`). Strategies: cache-first for hashed `/assets/*`, images, fonts and the 3D model; network-first for page navigations, falling back to cache, then the app shell, then `public/offline.html`; non-page requests get a plain 503 when offline and **never HTML** (HTML once poisoned the 3D loader). Cache namespace is `CACHE_VERSION = "ae-v1"` - bump it whenever you change what the worker caches so old caches purge on activate.
+Registered only in production builds (`src/main.tsx`). Strategies: cache-first for hashed `/assets/*`, images, fonts and the 3D model; network-first for page navigations, falling back to cache, then the app shell, then `public/offline.html`; non-page requests get a plain 503 when offline and **never HTML** (HTML once poisoned the 3D loader). Cache namespace is `CACHE_VERSION = "ae-v2"` - bump it whenever you change what the worker caches so old caches purge on activate.
 
 ### 4. Lazy routes + RouteFallback
 Every route except Home is `React.lazy` in `src/router/Router.tsx` behind a visible `RouteFallback` spinner. Do **not** go back to `fallback={null}` - a null fallback renders a blank page while a chunk loads (the original "page goes blank" complaint).
