@@ -1,4 +1,12 @@
-import { useState, useEffect, useRef, lazy, Suspense } from "react";
+import {
+  useState,
+  useEffect,
+  useRef,
+  lazy,
+  Suspense,
+  Component,
+  type ReactNode,
+} from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight, Calendar, Stethoscope, Star, MessageCircle, MapPin } from "lucide-react";
 import { CLINIC_INFO } from "@/constants";
@@ -37,6 +45,33 @@ function HeroStaticModel() {
       />
     </div>
   );
+}
+
+/**
+ * Crash-proofing for the 3D hero. Without an error boundary here, ANY failure
+ * in the three.js stack (WebGL context loss, HDR/GLB load failure, shader
+ * compile error) propagated to the root and unmounted the ENTIRE page — the
+ * "homepage loads for a second, then disappears" bug. Now any failure degrades
+ * to the same static model used on low-tier devices, and the rest of the page
+ * keeps working.
+ */
+class HeroErrorBoundary extends Component<
+  { children: ReactNode },
+  { failed: boolean }
+> {
+  state = { failed: false };
+
+  static getDerivedStateFromError() {
+    return { failed: true };
+  }
+
+  componentDidCatch(error: unknown) {
+    console.error("Hero 3D canvas failed — falling back to static model:", error);
+  }
+
+  render() {
+    return this.state.failed ? <HeroStaticModel /> : this.props.children;
+  }
 }
 
 export default function Hero() {
@@ -260,9 +295,11 @@ export default function Hero() {
                 {getPerfTier() === "low" ? (
                   <HeroStaticModel />
                 ) : (
-                  <Suspense fallback={null}>
-                    <HeroCanvas />
-                  </Suspense>
+                  <HeroErrorBoundary>
+                    <Suspense fallback={null}>
+                      <HeroCanvas />
+                    </Suspense>
+                  </HeroErrorBoundary>
                 )}
               </div>
             </div>

@@ -106,7 +106,7 @@ Facts that matter when editing:
 
 1. **Every external source is allow-listed.** fonts.googleapis.com (styles),
    fonts.gstatic.com (fonts), images.unsplash.com + cdn.21st.dev (images),
-   raw.githack.com (the drei `<Environment preset="city">` HDR fetch),
+   (hero HDR is self-hosted at `public/hdri/` — no external HDR host anymore),
    www.google.com (map iframe). Adding any new external image/script/font/iframe
    source requires updating the CSP in ALL THREE files or it breaks in production
    only — local dev (no headers) will look fine.
@@ -127,9 +127,11 @@ Facts that matter when editing:
    violation, missing JSON-LD, font failure or 503. It must print `RESULT: PASS`.
 
 Known external issues the smoke test reports as INFO (pre-existing, NOT CSP):
-- raw.githack.com 403/503s from some networks → the 3D hero falls back to the
-  static image (§6.1). Self-hosting the HDR would remove this dependency AND let
-  raw.githack be dropped from the CSP.
+- (resolved) The drei default preset used to fetch its HDR from raw.githack.com,
+  which intermittently 403/503'd — and because the hero had no error boundary,
+  that failure unmounted the whole page ("homepage loads then disappears").
+  The HDR is now self-hosted (public/hdri/), SW-cached, and the hero is wrapped
+  in an error boundary that falls back to the static model.
 - Two Unsplash photo IDs 404 (§6.1) — replace with local images when noticed.
 
 ## 6. Things that can break WITHOUT anyone touching the code
@@ -220,7 +222,7 @@ manually in `npm run preview`.
 |---|---|
 | Site shows old content after deploy | Bump `CACHE_VERSION` in `sw.js`, redeploy |
 | Blank white page on one device | DevTools → Application → Service Workers → Unregister + Clear storage; if reproducible for everyone, check console for a failed hashed asset (partial deploy — redeploy full `dist/`) |
-| 3D hero missing / blank hero | Test `?perf=high`; check `/stethoscope_animation.glb` returns 200; if SW-related, bump `CACHE_VERSION` |
+| 3D hero missing / blank hero (page itself stays) | Test `?perf=high`; check `/stethoscope_animation.glb` AND `/hdri/potsdamer_platz_1k.hdr` return 200; if SW-related, bump `CACHE_VERSION`. If the WHOLE page blanks: that was the old bug (unbounded 3D error) — fixed by `HeroErrorBoundary` + self-hosted HDR; verify both are in place |
 | WhatsApp opens the wrong number | Update `clinic.ts`, `grep -r "old number" src/ index.html`, rebuild, redeploy |
 | Open/closed badge wrong | `clinicStatus.ts` hours + `clinic.ts` `businessHours` string must match; badge is Nepal time (Asia/Kathmandu), correct worldwide |
 | Map/sitemap point at wrong domain | §7 |

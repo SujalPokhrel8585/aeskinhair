@@ -21,7 +21,7 @@ const securityHeaders: Record<string, string> = {
   "Referrer-Policy": "strict-origin-when-cross-origin",
   "Permissions-Policy": "camera=(), microphone=()",
   "Content-Security-Policy":
-    "default-src 'self'; script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob: https://images.unsplash.com https://cdn.21st.dev; connect-src 'self' https://raw.githack.com; frame-src 'self' https://www.google.com https://maps.google.com; worker-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; upgrade-insecure-requests",
+    "default-src 'self'; script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob: https://images.unsplash.com https://cdn.21st.dev; connect-src 'self'; frame-src 'self' https://www.google.com https://maps.google.com; worker-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; upgrade-insecure-requests",
 };
 
 const swSecurityHeaders: Record<string, string> = {
@@ -30,7 +30,7 @@ const swSecurityHeaders: Record<string, string> = {
   "Referrer-Policy": "strict-origin-when-cross-origin",
   "Permissions-Policy": "camera=(), microphone=()",
   "Content-Security-Policy":
-    "default-src 'self'; script-src 'self'; connect-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com https://images.unsplash.com https://raw.githack.com https://cdn.21st.dev",
+    "default-src 'self'; script-src 'self'; connect-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com https://images.unsplash.com https://cdn.21st.dev",
 };
 
 const previewSecurityHeaders = {

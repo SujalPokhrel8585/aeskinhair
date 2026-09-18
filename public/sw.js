@@ -4,9 +4,10 @@
 //   - HTML pages: network-first, fallback to cached index.html (SPA navigation)
 //   - Non-page requests offline: plain 503 (NEVER html — html poisoned the 3D loader)
 //   - Version hash changes on every build → old caches auto-purged
-// Bumped to v2 so caches from the pre-fix deploy (which 404'd testimonial
-// photos) are purged for returning visitors.
-const CACHE_VERSION = "ae-v2";
+// Bumped to v3: the hero HDR is now self-hosted (/hdri/potsdamer_platz_1k.hdr)
+// and cached cache-first like the other 3D assets; v2 caches (from before the
+// security-headers deploy) are purged for returning visitors.
+const CACHE_VERSION = "ae-v3";
 const STATIC_CACHE = `${CACHE_VERSION}-static`;
 const IMAGE_CACHE = `${CACHE_VERSION}-images`;
 const FONT_CACHE = `${CACHE_VERSION}-fonts`;
@@ -86,10 +87,12 @@ self.addEventListener("fetch", (event) => {
     return;
   }
 
-  // 3D models / wasm binaries: cache-first so the hero survives offline
+  // 3D models / HDR environment maps / wasm binaries: cache-first so the hero
+  // survives offline
   if (
     url.pathname.endsWith(".glb") ||
     url.pathname.endsWith(".gltf") ||
+    url.pathname.endsWith(".hdr") ||
     url.pathname.endsWith(".wasm")
   ) {
     event.respondWith(cacheFirst(request, STATIC_CACHE));

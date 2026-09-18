@@ -142,6 +142,32 @@ await page.click("button");
 await page.waitForLoadState("load");
 console.log("offline.html retry button click: no CSP violation");
 
+// Regression test for the "homepage loads for a second, then disappears" bug:
+// with the hero HDR blocked, the error boundary must degrade to the static
+// model — the page must NEVER blank.
+const blockedContext = await browser.newContext({ serviceWorkers: "block" });
+const blockedPage = await blockedContext.newPage();
+await blockedPage.route("**/*.hdr", (route) => route.abort());
+await blockedPage.goto(BASE + "/", { waitUntil: "load", timeout: 45000 });
+await blockedPage.waitForTimeout(3000);
+const alive = await blockedPage.evaluate(() => ({
+  main: !!document.querySelector("#main"),
+  canvas: !!document.querySelector(".canvas-wrapper canvas"),
+  staticModel: !!document.querySelector(".hero-static-model"),
+  textLen: document.body.innerText.length,
+}));
+console.log(
+  `HDR-blocked homepage: main=${alive.main} canvas=${alive.canvas} staticModel=${alive.staticModel} textLen=${alive.textLen}`,
+);
+if (!alive.main || alive.textLen < 50) {
+  allOk = false;
+  console.log("FAIL: homepage blanked with HDR blocked (error boundary missing/broken)");
+} else if (!alive.canvas && !alive.staticModel) {
+  allOk = false;
+  console.log("FAIL: neither 3D canvas nor static fallback rendered");
+}
+await blockedContext.close();
+
 console.log("---");
 console.log(`CSP violations: ${violations.length}`);
 violations.forEach((v) => console.log(`VIOLATION: ${v.slice(0, 250)}`));
