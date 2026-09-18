@@ -1,0 +1,66 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# AestheticEssence — Apache / cPanel configuration
+#
+# Mirrors vercel.json and public/_headers for hosts that run Apache. Vite
+# copies this file into dist/.htaccess on every build, so deploying the dist/
+# folder deploys it too. Vercel / Netlify / Cloudflare Pages ignore .htaccess,
+# so this file is harmless if hosting goes that way instead.
+#
+# The critical block is the SPA rewrite: React Router uses real URL paths
+# (/services/:id etc.), which only work if the server serves index.html for
+# them. Vercel/Netlify do this via the config files; Apache needs the rules
+# below.
+# ─────────────────────────────────────────────────────────────────────────────
+
+# ── SPA fallback: every non-file path serves index.html (200) ───────────────
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # Force HTTPS — UNCOMMENT ONLY AFTER SSL IS ACTIVE (AutoSSL / Let's Encrypt).
+  # Enabled without a certificate, this causes a redirect loop.
+  # (Vercel/Netlify/Cloudflare force HTTPS automatically; this block only
+  # matters on Apache/cPanel hosting.)
+  # RewriteCond %{HTTPS} off
+  # RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+  # Serve real files (sw.js, og-image.png, hdri/, assets/) and directories as-is
+  RewriteCond %{REQUEST_FILENAME} -f [OR]
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteRule ^ - [L]
+
+  # Everything else -> index.html; the client-side router takes over.
+  # [L] stops further processing; index.html is served with a 200 status.
+  RewriteRule ^ /index.html [L]
+</IfModule>
+
+# ── Security headers (keep in sync with vercel.json / public/_headers) ──────
+<IfModule mod_headers.c>
+  Header always set X-Frame-Options "DENY"
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set Permissions-Policy "camera=(), microphone=()"
+  Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob: https://images.unsplash.com https://cdn.21st.dev; connect-src 'self'; frame-src 'self' https://www.google.com https://maps.google.com; worker-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; upgrade-insecure-requests"
+  # HSTS deliberately omitted: includeSubDomains would also apply to
+  # webmail./cpanel. subdomains on shared hosting. Revisit only on dedicated
+  # hosting with a wildcard certificate.
+</IfModule>
+
+# ── Compression ──────────────────────────────────────────────────────────────
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/plain text/css text/javascript application/javascript application/json image/svg+xml
+</IfModule>
+
+# ── Cache lifetimes (hashed /assets are immutable; HTML must revalidate) ─────
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType text/html "access plus 0 seconds"
+  ExpiresByType text/css "access plus 1 year"
+  ExpiresByType text/javascript "access plus 1 year"
+  ExpiresByType application/javascript "access plus 1 year"
+  ExpiresByType image/webp "access plus 1 year"
+  ExpiresByType image/png "access plus 1 month"
+  ExpiresByType image/jpeg "access plus 1 month"
+  ExpiresByType image/svg+xml "access plus 1 month"
+  ExpiresByType application/octet-stream "access plus 1 year"
+  ExpiresByType model/gltf-binary "access plus 1 year"
+</IfModule>

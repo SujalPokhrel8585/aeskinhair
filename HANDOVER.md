@@ -46,7 +46,10 @@ npm run lint         # eslint
 ```
 
 Deploy = upload the **entire** `dist/` folder to the static host with SPA fallback.
-`vercel.json` and `public/_redirects` (Netlify) are already configured.
+`vercel.json` and `public/_redirects` (Netlify) are already configured. For
+cPanel/Apache shared hosting, `dist/.htaccess` (copied from `public/`) provides
+the same SPA rewrite — upload the *contents* of `dist/` into `public_html`; the
+force-HTTPS rules inside it are commented out until SSL (AutoSSL) is active.
 
 ## 4. Where content lives (edit here, nowhere else)
 
@@ -60,6 +63,7 @@ Deploy = upload the **entire** `dist/` folder to the static host with SPA fallba
 | Testimonials/reviews (hardcoded, not live Google reviews) | `src/features/home/data/` |
 | Legal pages | `src/features/legal/*.tsx` |
 | Sitemap (update if pages are added/removed!) | `public/sitemap.xml` |
+| Social preview card (og:image, 1200x630) | `public/og-image.png` — regenerate with `node scripts/generate-og-image.mjs` if logo/branding changes |
 | Robots | `public/robots.txt` |
 | Open/closed badge hours | `src/lib/clinicStatus.ts` (`CLINIC_OPEN_HOUR` / `CLINIC_CLOSE_HOUR`) **AND** the `businessHours` display string in `clinic.ts` — update BOTH or the badge and the text will disagree |
 
@@ -133,6 +137,30 @@ Known external issues the smoke test reports as INFO (pre-existing, NOT CSP):
   The HDR is now self-hosted (public/hdri/), SW-cached, and the hero is wrapped
   in an error boundary that falls back to the static model.
 - Two Unsplash photo IDs 404 (§6.1) — replace with local images when noticed.
+- `index.html` hand-preloads two *hashed* asset filenames
+  (`/assets/stethoscope-light-*.webp`, `-dark-*`). If those source images are
+  ever regenerated, the hashes change and the preloads 404 (harmless — just a
+  missed preload + double download — but update the two hrefs).
+
+## 5.6 Deliberately skipped — do not add without discussion
+
+Decisions made with the client (2026-09); each was evaluated and ruled out for
+this architecture. Revisit only if the site's architecture changes:
+
+- **Analytics** — skipped by client decision. If ever revisited, use a
+  cookieless provider (e.g. Cloudflare Web Analytics — free, host-agnostic);
+  cookie-based trackers (GA4, Meta pixel) would require a consent banner and
+  put patients' treatment-page views into ad-platform logs.
+- **Cookie consent banner** — the site sets ZERO cookies (theme preference is
+  `localStorage`, which is strictly functional and consent-exempt; forms go to
+  WhatsApp). A banner with nothing to consent to is misleading. Only needed if
+  cookie-based tracking is added.
+- **Spam protection** — nothing to spam: no backend, no form submission, no
+  mail endpoint. The booking form composes a WhatsApp deep link client-side.
+- **Secrets / API keys** — none exist; the Maps embed is keyless by design.
+- **Force HTTPS (code)** — hosting-level. Vercel/Netlify/Cloudflare force it
+  automatically; the `.htaccess` rules are present but commented out until SSL
+  is active on Apache/cPanel hosts.
 
 ## 6. Things that can break WITHOUT anyone touching the code
 

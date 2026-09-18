@@ -14,7 +14,7 @@ import {
 import { SERVICES } from "@/services/servicesService";
 import FAQSection from "./components/FAQSection";
 import Seo from "@/components/seo/Seo";
-import { serviceSeo, serviceSchema } from "@/constants/seo";
+import { serviceSeo, serviceSchema, breadcrumbSchema } from "@/constants/seo";
 import { CLINIC_INFO } from "@/constants/clinic";
 import { whatsappAnchorProps } from "@/lib/whatsapp";
 
@@ -99,7 +99,17 @@ export default function ServicePage() {
 
   return (
     <main id="main" className="page-gradient-bg w-full text-foreground overflow-hidden relative">
-      <Seo {...serviceSeo(service)} jsonLd={[serviceSchema(service)]} />
+      <Seo
+        {...serviceSeo(service)}
+        jsonLd={[
+          serviceSchema(service),
+          breadcrumbSchema([
+            { name: "Home", url: "/" },
+            { name: "Services", url: "/services" },
+            { name: service.title, url: `/services/${service.id}` },
+          ]),
+        ]}
+      />
       {/* Ambient Background Glow Blobs */}
       <div className="ambient-blobs-container">
         <div className="ambient-blob ambient-blob-sky-lg" />
@@ -108,13 +118,33 @@ export default function ServicePage() {
       </div>
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-16 md:pt-12 md:pb-24">
-        {/* Back link */}
-        <Link
-          to="/services"
-          className="inline-flex items-center gap-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors mb-6"
-        >
-          <ArrowLeft className="size-4" /> Back to All Services
-        </Link>
+        {/* Breadcrumb trail — visible for users, BreadcrumbList JSON-LD for
+            search engines (internal-linking SEO signal) */}
+        <nav aria-label="Breadcrumb" className="mb-6 text-sm text-muted-foreground">
+          <ol className="flex flex-wrap items-center gap-2">
+            <li>
+              <Link
+                to="/"
+                className="hover:text-foreground transition-colors"
+              >
+                Home
+              </Link>
+            </li>
+            <li aria-hidden="true">/</li>
+            <li>
+              <Link
+                to="/services"
+                className="inline-flex items-center gap-2 hover:text-foreground transition-colors"
+              >
+                <ArrowLeft className="size-4" /> All Services
+              </Link>
+            </li>
+            <li aria-hidden="true">/</li>
+            <li aria-current="page" className="text-foreground">
+              {service.title}
+            </li>
+          </ol>
+        </nav>
 
         {/* HERO, image + key facts */}
         <motion.section

@@ -51,7 +51,7 @@ export function Seo({
     ? ogImage.startsWith("http")
       ? ogImage
       : `${CLINIC_INFO.siteUrl}${ogImage}`
-    : `${CLINIC_INFO.siteUrl}/logo-dark.png`;
+    : `${CLINIC_INFO.siteUrl}/og-image.png`;
 
   useEffect(() => {
     document.title = title;
@@ -64,6 +64,13 @@ export function Seo({
     upsertMeta("property", "og:type", "website");
     upsertMeta("property", "og:site_name", CLINIC_INFO.name);
     upsertMeta("property", "og:image", image);
+    upsertMeta("property", "og:image:width", "1200");
+    upsertMeta("property", "og:image:height", "630");
+    upsertMeta(
+      "property",
+      "og:image:alt",
+      `${CLINIC_INFO.name} — Skin & Hair Clinic, Samakhushi, Kathmandu`,
+    );
     upsertMeta("name", "twitter:card", "summary_large_image");
     upsertMeta("name", "twitter:title", title);
     upsertMeta("name", "twitter:description", description);

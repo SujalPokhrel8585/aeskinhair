@@ -15,7 +15,7 @@ import {
 import { SERVICES } from "@/services/servicesService";
 import { GOOGLE_REVIEWS_URL } from "@/features/home/data/testimonialsData";
 import Seo from "@/components/seo/Seo";
-import { seoForPath } from "@/constants/seo";
+import { seoForPath, breadcrumbSchema } from "@/constants/seo";
 
 // ── Group definitions (matches your navbar) ──
 const GROUPS = [
@@ -78,7 +78,32 @@ export default function ServicesIndexPage() {
 
   return (
     <main id="main" className="page-gradient-bg w-full text-foreground overflow-hidden relative">
-      <Seo {...seoForPath("/services")} />
+      <Seo
+        {...seoForPath("/services")}
+        jsonLd={[
+          breadcrumbSchema([
+            { name: "Home", url: "/" },
+            { name: "Services", url: "/services" },
+          ]),
+        ]}
+      />
+      {/* Breadcrumb (visible + BreadcrumbList JSON-LD for search engines) */}
+      <nav
+        aria-label="Breadcrumb"
+        className="px-4 pt-6 text-sm text-muted-foreground sm:px-6 lg:px-8"
+      >
+        <ol className="mx-auto flex max-w-4xl items-center gap-2">
+          <li>
+            <Link to="/" className="hover:text-foreground transition-colors">
+              Home
+            </Link>
+          </li>
+          <li aria-hidden="true">/</li>
+          <li aria-current="page" className="text-foreground">
+            Services
+          </li>
+        </ol>
+      </nav>
       {/* Ambient glows */}
       <div className="ambient-blobs-container">
         <div className="ambient-blob ambient-blob-sky-lg" />

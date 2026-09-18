@@ -98,7 +98,7 @@ export function medicalClinicSchema() {
     "@type": "MedicalClinic",
     name: CLINIC_INFO.name,
     url: CLINIC_INFO.siteUrl,
-    image: `${CLINIC_INFO.siteUrl}/logo-dark.png`,
+    image: `${CLINIC_INFO.siteUrl}/og-image.png`,
     telephone: `+977${CLINIC_INFO.phoneRaw}`,
     priceRange: "NPR 2,500+",
     medicalSpecialty: "Dermatology",
@@ -167,6 +167,20 @@ export function physiciansSchema() {
           addressCountry: CLINIC_INFO.addressCountry,
         },
       },
+    })),
+  };
+}
+
+/** BreadcrumbList schema for pages with a visible breadcrumb trail. */
+export function breadcrumbSchema(crumbs: { name: string; url: string }[]) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: crumbs.map((crumb, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: crumb.name,
+      item: `${CLINIC_INFO.siteUrl}${crumb.url}`,
     })),
   };
 }
