@@ -91,6 +91,47 @@ Rules that keep it safe:
 Fix: bump `CACHE_VERSION`, redeploy. For a single stuck user, DevTools → Application →
 Service Workers → Unregister + "Clear storage", then reload.
 
+
+## 5.5 Security headers (CSP) — read before touching external sources or inline code
+
+Response headers (X-Frame-Options, nosniff, Referrer-Policy, Permissions-Policy, HSTS
+and a Content-Security-Policy) are configured in three places that MUST stay in sync:
+
+- `vercel.json` (Vercel; `/sw.js` has its own, more permissive CSP rule there)
+- `public/_headers` (Netlify / Cloudflare Pages; same `/*` + `/sw.js` layout)
+- the `preview-security-headers` plugin in `vite.config.ts` (so `npm run preview`
+  serves the exact production headers — HSTS is omitted locally on purpose)
+
+Facts that matter when editing:
+
+1. **Every external source is allow-listed.** fonts.googleapis.com (styles),
+   fonts.gstatic.com (fonts), images.unsplash.com + cdn.21st.dev (images),
+   raw.githack.com (the drei `<Environment preset="city">` HDR fetch),
+   www.google.com (map iframe). Adding any new external image/script/font/iframe
+   source requires updating the CSP in ALL THREE files or it breaks in production
+   only — local dev (no headers) will look fine.
+2. **script-src is `'self' 'unsafe-inline' 'wasm-unsafe-eval'` — deliberate.**
+   `Seo.tsx` injects JSON-LD via the DOM, and Chrome blocks-AND-STRIPS those data
+   blocks under a hash/nonce-based script-src (verified — it silently kills all
+   SEO structured data; static hosts cannot do per-request nonces).
+   'wasm-unsafe-eval' is required by the GLB decoder (draco/meshoptimizer).
+   There are no injection sinks in this codebase (query params are allow-listed),
+   and frame-ancestors 'none', object-src 'none', base-uri 'self' and connect-src
+   restrictions still apply.
+3. **`/sw.js` carries its own CSP.** The worker fetches fonts, Unsplash images,
+   the 21st.dev SVGs and the HDR itself; without those connect-src origins every
+   SW revalidation 503s and offline/first-visit asset caching breaks.
+4. **After any header or external-source change, run**
+   `node scripts/security-headers-smoke.mjs` — it drives a real browser (local
+   Chrome/Edge) through every route WITH the production CSP and fails on any CSP
+   violation, missing JSON-LD, font failure or 503. It must print `RESULT: PASS`.
+
+Known external issues the smoke test reports as INFO (pre-existing, NOT CSP):
+- raw.githack.com 403/503s from some networks → the 3D hero falls back to the
+  static image (§6.1). Self-hosting the HDR would remove this dependency AND let
+  raw.githack be dropped from the CSP.
+- Two Unsplash photo IDs 404 (§6.1) — replace with local images when noticed.
+
 ## 6. Things that can break WITHOUT anyone touching the code
 
 Honest list, ranked by likelihood:

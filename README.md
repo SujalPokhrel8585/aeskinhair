@@ -137,7 +137,7 @@ Each page renders `<Seo>` (`src/components/seo/Seo.tsx`) with metadata from `src
 `index.html` preloads the hero fallback images by their content-hashed names (e.g. `/assets/stethoscope-light-BailOwvS.webp`). If you replace those images, copy the new hashed names from the build output into `index.html`, otherwise the preloads 404 silently.
 
 ### 10. Hosting configs
-`vercel.json` (rewrite everything to `/index.html`) and `public/_redirects` (Netlify) are included. Any static host works as long as SPA fallback is configured. `vite preview` allows arbitrary hosts (`preview.allowedHosts`) for tunnel testing.
+`vercel.json` (rewrite to `/index.html`), `public/_redirects` + `public/_headers` (Netlify/Cloudflare Pages) and the `preview-security-headers` plugin in `vite.config.ts` are included — security headers + CSP are configured in all three and must stay in sync (see HANDOVER §5.5). Any static host works as long as SPA fallback is configured. `vite preview` allows arbitrary hosts (`preview.allowedHosts`) for tunnel testing.
 
 ## Editing guide (where to change what)
 

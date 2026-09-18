@@ -1,0 +1,22 @@
+# Security headers (Netlify / Cloudflare Pages format). Keep in sync with
+# vercel.json and the preview-security-headers plugin in vite.config.ts.
+#
+# /sw.js gets its own Content-Security-Policy (declared after the /* rule, which
+# it overrides): the service worker script must be allowed to fetch the origins
+# it revalidates (fonts, Unsplash images, the drei HDR) or every offline
+# revalidation fails with a 503 fallback.
+/*
+  X-Frame-Options: DENY
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=()
+  Strict-Transport-Security: max-age=31536000; includeSubDomains
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob: https://images.unsplash.com https://cdn.21st.dev; connect-src 'self' https://raw.githack.com; frame-src 'self' https://www.google.com https://maps.google.com; worker-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; upgrade-insecure-requests
+
+/sw.js
+  X-Frame-Options: DENY
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=()
+  Strict-Transport-Security: max-age=31536000; includeSubDomains
+  Content-Security-Policy: default-src 'self'; script-src 'self'; connect-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com https://images.unsplash.com https://raw.githack.com https://cdn.21st.dev
