@@ -131,7 +131,7 @@ There is no backend. Contact and booking build `https://wa.me/` deep links with 
 `src/lib/clinicStatus.ts` computes open/closed in Nepal time (UTC+5:45). `CLINIC_OPEN_HOUR` / `CLINIC_CLOSE_HOUR` are the single source for the hero badge and the JSON-LD opening hours; `businessHours` in `src/constants/clinic.ts` must match.
 
 ### 8. SEO system
-Each page renders `<Seo>` (`src/components/seo/Seo.tsx`) with metadata from `src/constants/seo.ts` (titles, descriptions, canonical, Open Graph, Twitter). JSON-LD builders (MedicalClinic, Physician, MedicalProcedure) live in the same file and are injected and removed per route. `public/sitemap.xml` and `public/robots.txt` must be updated when routes change. The canonical domain is `siteUrl` in `src/constants/clinic.ts`.
+Each page renders `<Seo>` (`src/components/seo/Seo.tsx`) with metadata from `src/constants/seo.ts` (titles, descriptions, canonical, Open Graph, Twitter). JSON-LD builders (MedicalClinic, Physician, MedicalProcedure) live in the same file and are injected and removed per route. `public/sitemap.xml` and `public/robots.txt` must be updated when routes change. The canonical domain is `siteUrl` in `src/constants/clinic.ts`. Every route shares the same social preview: the generated 1200x630 `public/og-image.png` (its `og:image:width/height` tags must always match its real size).
 
 ### 9. Pinned preload hashes (index.html)
 `index.html` preloads the hero fallback images by their content-hashed names (e.g. `/assets/stethoscope-light-BailOwvS.webp`). If you replace those images, copy the new hashed names from the build output into `index.html`, otherwise the preloads 404 silently.

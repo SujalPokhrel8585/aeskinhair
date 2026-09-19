@@ -13,7 +13,6 @@ export interface SeoMeta {
   title: string;
   description: string;
   path: string;
-  ogImage?: string;
 }
 
 const BRAND = CLINIC_INFO.name;
@@ -25,7 +24,6 @@ export const STATIC_SEO: Record<string, SeoMeta> = {
     description:
       "Advanced skin & hair clinic at City Square Mall, Samakhushi, Kathmandu. HydraFacial, acne & scar treatment, laser hair reduction, Botox, PRP & GFC and melasma care by NMC-registered dermatologists. Book on WhatsApp.",
     path: "/",
-    ogImage: "/clinic/front-desk.png",
   },
   "/services": {
     title: `Skin & Hair Treatments in Kathmandu | ${BRAND}`,
@@ -86,7 +84,6 @@ export function serviceSeo(service: Service): SeoMeta {
     title: `${service.title} in Kathmandu | ${BRAND}`,
     description: `${service.tagline}. ${service.description} Performed by NMC-registered dermatologists at ${BRAND}, ${LOCATION}. Book on WhatsApp.`,
     path: `/services/${service.id}`,
-    ogImage: service.image.startsWith("http") ? undefined : service.image,
   };
 }
 

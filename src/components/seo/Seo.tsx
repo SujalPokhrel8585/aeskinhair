@@ -43,15 +43,13 @@ export function Seo({
   title = CLINIC_INFO.name,
   description = CLINIC_INFO.tagline,
   path = "/",
-  ogImage,
   jsonLd,
 }: SeoProps) {
   const canonical = absoluteUrl(path);
-  const image = ogImage
-    ? ogImage.startsWith("http")
-      ? ogImage
-      : `${CLINIC_INFO.siteUrl}${ogImage}`
-    : `${CLINIC_INFO.siteUrl}/og-image.png`;
+  // One social preview card for every route: the generated 1200x630 brand
+  // card. The og:image:width/height tags below MUST match its real size,
+  // so never point this at an arbitrary photo (sizes/aspect would disagree).
+  const image = `${CLINIC_INFO.siteUrl}/og-image.png`;
 
   useEffect(() => {
     document.title = title;
