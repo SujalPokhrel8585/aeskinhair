@@ -57,7 +57,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
   },
   {
     id: "ae-04",
-    src: "https://images.unsplash.com/photo-1620331311520-24642279d2f5?q=80&w=800&auto=format&fit=crop",
+    src: "/services/co2-laser.webp",
     title: "Safe, Supervised Laser Care",
     subtitle: "Protective eyewear and strict protocols at every step",
     category: "Clinical",
@@ -105,7 +105,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
   },
   {
     id: "ae-09",
-    src: "https://images.unsplash.com/photo-1620331311520-24642279d2f5?q=80&w=800&auto=format&fit=crop",
+    src: "/services/laser-hair-removal.webp",
     title: "Laser Hair Removal",
     subtitle: "Long-term reduction, safe for all skin tones",
     category: "Aesthetics",

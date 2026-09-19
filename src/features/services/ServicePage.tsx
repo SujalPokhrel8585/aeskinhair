@@ -206,7 +206,7 @@ export default function ServicePage() {
                 <ArrowRight className="size-4" />
               </Link>
               <a
-                href="tel:9767648659"
+                href={`tel:${CLINIC_INFO.phoneTel}`}
                 className="inline-flex w-full items-center justify-center gap-2 px-6 py-3 rounded-full bg-muted hover:bg-muted/80 text-foreground font-semibold text-sm border border-border transition-colors sm:w-auto"
               >
                 <Phone className="size-4 text-accent-foreground" />

@@ -11,7 +11,7 @@ import { useSearchParams } from "react-router-dom";
 import { motion, AnimatePresence } from "motion/react"
 import Seo from "@/components/seo/Seo";
 import { seoForPath } from "@/constants/seo";
-import { WHATSAPP_NUMBER } from "@/constants";
+import { WHATSAPP_NUMBER, CLINIC_INFO } from "@/constants";
 import { openWhatsApp } from "@/lib/whatsapp";
 import {
   CLINIC_OPEN_HOUR,
@@ -351,7 +351,7 @@ export default function BookAppointmentPage() {
                   Prefer to call?
                 </span>
                 <a
-                  href="tel:9767648659"
+                  href={`tel:${CLINIC_INFO.phoneTel}`}
                   className="text-sm font-medium text-foreground hover:text-primary transition-colors"
                 >
                   +977 976-7648659 · 01-4978659

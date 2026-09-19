@@ -80,7 +80,7 @@ export function Footer({
               <li className="flex items-center gap-2.5">
                 <Phone className="size-4 shrink-0 text-muted-foreground" />
                 <a
-                  href={`tel:${CLINIC_INFO.phoneRaw}`}
+                  href={`tel:${CLINIC_INFO.phoneTel}`}
                   className="hover:text-foreground transition-colors"
                 >
                   {CLINIC_INFO.phone}

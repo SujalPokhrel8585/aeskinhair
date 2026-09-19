@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import { SERVICES } from "@/services/servicesService";
 import { GOOGLE_REVIEWS_URL } from "@/features/home/data/testimonialsData";
+import { CLINIC_INFO } from "@/constants";
 import Seo from "@/components/seo/Seo";
 import { seoForPath, breadcrumbSchema } from "@/constants/seo";
 
@@ -446,7 +447,7 @@ export default function ServicesIndexPage() {
                 Book Consultation
               </Link>
               <a
-                href="tel:9767648659"
+                href={`tel:${CLINIC_INFO.phoneTel}`}
                 className="px-6 py-3 rounded-full bg-primary-foreground/10 hover:bg-primary-foreground/20 text-primary-foreground font-semibold text-sm border border-primary-foreground/20 backdrop-blur-xs transition-all inline-flex items-center gap-2 justify-center whitespace-nowrap"
               >
                 <Phone className="size-4 text-primary-foreground" />

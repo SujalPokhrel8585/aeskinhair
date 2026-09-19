@@ -43,7 +43,7 @@ export function ContactInfo() {
                 Call Us
               </h3>
               <a
-                href={`tel:${CLINIC_INFO.phoneRaw}`}
+                href={`tel:${CLINIC_INFO.phoneTel}`}
                 className="text-xs sm:text-sm text-muted-foreground hover:text-accent-foreground transition-colors"
               >
                 {CLINIC_INFO.phone}

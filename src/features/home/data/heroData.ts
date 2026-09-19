@@ -6,7 +6,7 @@ import { Facebook, Instagram, TikTok } from "./heroIcons";
 
 export const FLOATING_BADGES = [
   {
-    href: `tel:${CLINIC_INFO.phoneRaw}`,
+    href: `tel:${CLINIC_INFO.phoneTel}`,
     icon: Phone,
     label: "Phone / WhatsApp",
     badgeClass: "badge-1",

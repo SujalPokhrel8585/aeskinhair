@@ -15,7 +15,7 @@ export function MobileActionBar() {
     >
       <div className="mx-3 mb-3 grid grid-cols-3 gap-2 rounded-2xl border border-border bg-card/95 p-2 shadow-xl backdrop-blur-md">
         <a
-          href={`tel:${CLINIC_INFO.phoneRaw}`}
+          href={`tel:${CLINIC_INFO.phoneTel}`}
           className="flex flex-col items-center justify-center gap-0.5 rounded-xl bg-primary py-2 text-xs font-semibold text-primary-foreground transition-colors hover:bg-primary/90"
           aria-label={`Call ${CLINIC_INFO.name}`}
         >

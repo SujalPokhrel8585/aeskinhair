@@ -63,7 +63,7 @@ export const SERVICES: Service[] = [
     duration: "15 – 45 mins",
     icon: Zap,
     featured: false,
-    image: "https://images.unsplash.com/photo-1620331311520-24642279d2f5?q=80&w=800&auto=format&fit=crop",
+    image: "/services/laser-hair-removal.webp",
     category: "Laser",
   },
   {

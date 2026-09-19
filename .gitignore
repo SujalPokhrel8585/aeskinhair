@@ -33,5 +33,9 @@ dist-ssr
 New images/
 dev_output.log
 dev_server_test.log
+ext-urls.json
+
+# Agent worktrees / tool scratch dirs (untracked copies of the repo)
+.kilo/
 
 .timeline-shots/

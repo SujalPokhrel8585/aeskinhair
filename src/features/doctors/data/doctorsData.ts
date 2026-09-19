@@ -22,7 +22,7 @@ export const doctorData: Doctor[] = [
     instagram: "https://www.instagram.com/drprameshkoirala",
     bio: "Consultant dermatologist focused on medical and aesthetic dermatology — laser treatments, PRP & GFC regenerative therapy, scar revision, and surgical dermatology.",
     imageUrl:
-      "https://images.unsplash.com/photo-1612349317191-a9b7f3173f36?q=80&w=600&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?q=80&w=600&auto=format&fit=crop",
   },
 ];
 

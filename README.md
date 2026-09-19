@@ -162,6 +162,30 @@ npm run build
 
 Deploy `dist/` to any static host with SPA fallback (configs included for Vercel + Netlify). Keep the service worker in mind: it is cache-first for hashed assets, so content updates ship via fresh HTML and new asset hashes; if you change the worker itself, bump `CACHE_VERSION`.
 
+> **Cloudflare Pages note (recommended host):** do **NOT** deploy a `_redirects`
+> file with a `/* /index.html 200` catch-all. Cloudflare Pages follows
+> `_redirects` rules *before* checking for real assets ("Redirects are always
+> followed, regardless of whether or not an asset matches the incoming
+> request"), so the catch-all shadows every JS/CSS/image file with index.html
+> and produces a permanent blank page. Pages serves SPAs automatically when no
+> top-level `404.html` exists — deep links like `/services/hydrafacial` work
+> with **zero redirect config**. The build emits only `index.html` and
+> `offline.html`; never add a `404.html`. `public/_headers` (CSP etc.) IS read
+> by Cloudflare Pages and should be deployed.
+
+## ⚠️ Launch & maintenance checklist
+
+| # | Task | Why / how |
+|---|------|-----------|
+| 1 | **Renew the `.com.np` domain EVERY year** (register.com.np / Mercantile) — set a phone + calendar reminder 30 days before expiry | Free `.com.np` domains expire yearly; expiry = site down + DNS gone. This is the **#1 "site suddenly dead" cause**. Renewal needs an NMC registration / citizenship document. |
+| 2 | **Point nameservers to Cloudflare** at registration, then add the domain to the Cloudflare Pages project (Custom domains) | Required for Pages + HTTPS on the custom domain. |
+| 3 | **Apex ↔ www redirect** — one Cloudflare Redirect Rule: `aestheticessence.com.np/*` → `https://www.aestheticessence.com.np/$1` (301) | Canonicals/sitemap/og:image all use `https://www.aestheticessence.com.np`; keep exactly one canonical origin. |
+| 4 | **Domain agreement check** — `siteUrl` in `src/constants/clinic.ts`, `index.html` (canonical + og:image), `public/robots.txt`, `public/sitemap.xml` must all use the SAME origin | If the final domain name changes, update all four together (HANDOVER §7). |
+| 5 | **Analytics (optional, zero cost)** — Cloudflare Pages → project → Metrics → **Enable** under Web Analytics. Free on all plans, cookieless, no consent banner needed, zero code changes, works on any hostname (apex or www). **One required companion change:** the beacon loads from `https://static.cloudflareinsights.com`, which the CSP blocks by default. When enabling, add `https://static.cloudflareinsights.com` to **both** `script-src` and `connect-src` in `public/_headers`, `vercel.json` AND `vite.config.ts` (keep the three in sync) — otherwise the beacon is silently blocked and stats stay empty (the site itself is unaffected). | Visibility into visitors without breaking CSP or privacy. |
+| 6 | **Finalizing images** — the 13 `public/services/*.webp` files are staged drop-in replacements for the ~49 Unsplash hotlinks in `servicesData.ts`, `galleryData.ts`, `doctorsData.ts`, `facilitiesTechData.ts`, `WhyChooseUs.tsx`, `BeforeAfter.tsx` | Unsplash hotlinks work today but can break if Unsplash removes a photo ID. Download real clinic photos, replace the URLs with `/services/<id>.webp` paths, run `npm run compress:images`. |
+| 7 | **About-page facility image** — `public/clinic/hydrafacial-elite.webp` is currently a stand-in copy of the hydrafacial service photo | Replace the file at the same path with the real photo — no code change needed. |
+| 8 | **`npm run build` before every deploy** — it type-checks everything; then spot-check `npm run preview` | The only safety net besides lint. |
+
 ## License
 
 Private - AestheticEssence Skin & Hair Clinic.
