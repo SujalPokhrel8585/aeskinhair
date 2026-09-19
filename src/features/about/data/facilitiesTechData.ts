@@ -23,7 +23,8 @@ export const FACILITIES_TECH: FacilityTechItem[] = [
     specs: "Syndeo System, Imported from USA",
     caption:
       "Authentic medical-grade vortex-infusion device that gently exfoliates, cleanses pores, and delivers targeted nutrient serums deep into dermal layers.",
-    image: "/clinic/hydrafacial-elite.webp",
+    image:
+      "https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?q=80&w=800&auto=format&fit=crop",
     category: "Facial Aesthetics",
   },
   {

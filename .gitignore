@@ -25,17 +25,11 @@ dist-ssr
 
 # Verification script screenshots
 .nav-shots/
-.nav-shots/
 .timeline-shots/
 
-# CLI artifacts & source material not part of the site
-.zcode/
-New images/
-dev_output.log
-dev_server_test.log
+# Scratch artifacts (not part of the site)
 ext-urls.json
 
 # Agent worktrees / tool scratch dirs (untracked copies of the repo)
 .kilo/
 
-.timeline-shots/

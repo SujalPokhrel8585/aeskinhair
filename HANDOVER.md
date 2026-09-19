@@ -239,8 +239,6 @@ manually in `npm run preview`.
   - `main` — source of truth
   - `privacy-deploy` — kept in sync with `main` at handover; push the same commit
     to both unless told otherwise.
-- `Details.txt` in the repo root is scratch notes from a *different* client project
-  (Skin & Hair Hub Nepal) — ignore it; it does not describe this site.
 - Scripts you may never need: `compress:images`, `generate:favicon`,
   `capture:stethoscope` (3D model → poster image; needs local Chrome/Edge).
 
