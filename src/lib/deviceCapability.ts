@@ -2,9 +2,9 @@
 // the right hero variant (3D vs static) is chosen without any flash.
 //
 // Tiers:
-//   high   — full experience: 3D with shadows, antialiasing, all animations
-//   medium — 3D kept fully interactive but cheaper (lower dpr, no shadows)
-//   low    — no WebGL work at all: static stethoscope photo, no blur, no
+//   high   - full experience: 3D with shadows, antialiasing, all animations
+//   medium - 3D kept fully interactive but cheaper (lower dpr, no shadows)
+//   low    - no WebGL work at all: static stethoscope photo, no blur, no
 //            canvas animations. Used for old phones, data-saver, no-WebGL
 //            and reduced-motion users.
 //
@@ -55,11 +55,11 @@ function detectTier(): PerfTier {
   const cores = nav.hardwareConcurrency ?? 4;
   score += cores >= 8 ? 3 : cores >= 6 ? 2 : cores >= 4 ? 1 : 0;
 
-  // deviceMemory is capped at 8 by spec; old phones report 2–4.
+  // deviceMemory is capped at 8 by spec; old phones report 2-4.
   const mem = nav.deviceMemory ?? 4;
   score += mem >= 8 ? 3 : mem >= 6 ? 2 : mem >= 4 ? 1 : 0;
 
-  // GPU class check — catches old integrated/low-end mobile GPUs.
+  // GPU class check - catches old integrated/low-end mobile GPUs.
   try {
     const canvas = document.createElement("canvas");
     const gl = (canvas.getContext("webgl2") ??
@@ -73,7 +73,7 @@ function detectTier(): PerfTier {
       /(mali-g[1-5][0-9]|adreno[^a-z0-9]*(4[0-9]{2}|5[0-9]{2}|6[01][0-9])|powervr|swiftshader|llvmpipe|intel.*(hd|uhd) graphics (2|3|4|5|6)[0-9]{2})/i;
     if (weakGpu.test(renderer)) score -= 2;
   } catch {
-    /* WebGL probe failed — fall through to CPU score */
+    /* WebGL probe failed - fall through to CPU score */
   }
 
   const isSmallScreen = window.matchMedia("(max-width: 640px)").matches;

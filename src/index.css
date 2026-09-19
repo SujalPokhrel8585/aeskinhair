@@ -16,7 +16,7 @@
 @custom-variant dark (&:is(.dark *));
 
 /* ==========================================================================
-   Design Tokens — AestheticEssence Gold Clinical
+   Design Tokens - AestheticEssence Gold Clinical
    Derived from the brand logo:
    - Gold        #C9A227 (AE monogram / wordmark) → primary,
      deepened to #A8841C for AA contrast on white
@@ -38,11 +38,11 @@
   --popover: #ffffff;
   --popover-foreground: #1c1c1c;
 
-  /* Primary — Logo Gold (deepened for AA contrast on white) */
+  /* Primary - Logo Gold (deepened for AA contrast on white) */
   --primary: #a8841c;
   --primary-foreground: #ffffff;
 
-  /* Secondary — Navy tint */
+  /* Secondary - Navy tint */
   --secondary: #e9edf5;
   --secondary-foreground: #1e3a5f;
 
@@ -50,7 +50,7 @@
   --muted: #f2ede1;
   --muted-foreground: #6b6353;
 
-  /* Accent — Gold tint */
+  /* Accent - Gold tint */
   --accent: #f7eed6;
   --accent-foreground: #7a5c0a;
 
@@ -98,7 +98,7 @@
   --secondary-foreground: #c3d0e8;
 
   --muted: #201f1c;
-  /* Soft off-white with a hint of gold — paragraphs stay readable but not pure white */
+  /* Soft off-white with a hint of gold - paragraphs stay readable but not pure white */
   --muted-foreground: #c4bda9;
 
   --accent: #2c2612;
@@ -225,10 +225,10 @@
 }
 
 /* ==========================================================================
-   Global Visual Classes — Royal Clinical
+   Global Visual Classes - Royal Clinical
    ========================================================================== */
 
-/* Navbar — Clean & Consistent (no extra treatment) */
+/* Navbar - Clean & Consistent (no extra treatment) */
 .navbar-bg {
   background-color: rgba(250, 252, 250, 0.92);
   backdrop-filter: blur(12px);
@@ -256,7 +256,7 @@
   );
 }
 
-/* Ambient Glow Blobs — AestheticEssence gold family with navy accents */
+/* Ambient Glow Blobs - AestheticEssence gold family with navy accents */
 .ambient-blobs-container {
   pointer-events: none;
   position: absolute;
@@ -387,7 +387,7 @@
   background-color: rgba(227, 193, 92, 0.14);
 }
 
-/* Torn paper edge transition — edge only (transparent upper part) */
+/* Torn paper edge transition - edge only (transparent upper part) */
 .torn-paper-edge {
   width: 100%;
   display: block;
@@ -403,7 +403,7 @@
   display: none;
 }
 
-/* Dark-mode torn paper (torn-paper-dark.webp) — hidden in light mode */
+/* Dark-mode torn paper (torn-paper-dark.webp) - hidden in light mode */
 .torn-paper-edge-dark {
   display: none;
   width: 100%;
@@ -417,7 +417,7 @@
   display: block;
 }
 /* ==========================================================================
-   Hero Section — uses same background as other pages
+   Hero Section - uses same background as other pages
    ========================================================================== */
 
 .hero-gradient-bg {
@@ -633,7 +633,7 @@
   animation: statusFlipIn 0.9s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-/* Status card hover — same pop + bluish ring as the floating badges */
+/* Status card hover - same pop + bluish ring as the floating badges */
 .hero-status-card {
   border-color: rgba(var(--gold-rgb), 0.14);
   transition: var(--transition-smooth);
@@ -689,12 +689,12 @@
 }
 
 /* Book Appointment (hero + navbar + doctor book): a bold, attention-grabbing
-   pulse — wide glow ring + visible scale-up on a quick rhythm.
+   pulse - wide glow ring + visible scale-up on a quick rhythm.
 
    Perf note: the ring lives on a ::after pseudo-element and animates ONLY
    transform + opacity (compositor thread). The old version animated
    box-shadow directly on the button, which forces a main-thread paint every
-   frame — measured as the single biggest idle-jank source on throttled
+   frame - measured as the single biggest idle-jank source on throttled
    mobile CPUs. Visual result is the same expanding mint ring. */
 .book-cta-pulse {
   position: relative;
@@ -734,7 +734,7 @@
   }
 }
 
-/* Our Services: slight 3D tilt on hover — the button appears to lift and
+/* Our Services: slight 3D tilt on hover - the button appears to lift and
    face the viewer, with an extruded edge shadow for depth */
 .services-cta-3d {
   transform-style: preserve-3d;
@@ -777,7 +777,7 @@
   outline: none;
 }
 
-/* Static stethoscope fallback for low-tier devices — gentle float so the
+/* Static stethoscope fallback for low-tier devices - gentle float so the
    photo still feels alive without any WebGL work. */
 .hero-static-model {
   animation: heroModelFloat 6s ease-in-out infinite;
@@ -817,7 +817,7 @@
 
 /* Off-screen hero: browsers keep ticking CSS animations even when their
    elements are scrolled out of view (they still cost style/paint work on
-   throttled CPUs) — pause the hero's infinite animations while away. */
+   throttled CPUs) - pause the hero's infinite animations while away. */
 .hero-offscreen .badge-icon,
 .hero-offscreen .book-cta-pulse,
 .hero-offscreen .hero-static-model {
@@ -825,7 +825,7 @@
 }
 
 /* Mid tier: keep blur on in-flow cards, but the always-on-screen sticky
-   navbar + mobile action bar re-blur on EVERY scroll frame — those get solid
+   navbar + mobile action bar re-blur on EVERY scroll frame - those get solid
    surfaces. (Low tier already removes all blur via .perf-low.) */
 .perf-mid .blurred-fixed-bar {
   backdrop-filter: none !important;
@@ -886,14 +886,14 @@
 }
 
 /* ==========================================================================
-   Dark Mode Overrides — Deep Blue Ink
+   Dark Mode Overrides - Deep Blue Ink
    ========================================================================== */
 .dark .navbar-bg {
   background-color: rgba(8, 18, 17, 0.88);
   border-bottom-color: rgba(255, 255, 255, 0.08);
 }
 
-/* Bottom CTA card on the Services pages — give it a deep saturated gold with
+/* Bottom CTA card on the Services pages - give it a deep saturated gold with
    light foreground in dark mode so it reads as an elevated card instead of a
    washed, near-background block. (Light mode untouched.) */
 .dark .cta-card {

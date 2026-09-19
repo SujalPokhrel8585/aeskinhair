@@ -17,7 +17,7 @@ export const WHY_CHOOSE_US_POINTS: WhyChooseUsPoint[] = [
     title: "Regenerative PRP & GFC Therapy",
     tagline: "Natural Growth Factors for Hair & Skin",
     description:
-      "Our regenerative protocols use your own platelet-rich plasma and growth factor concentrate to stimulate hair follicles, slow hair loss and rejuvenate facial skin — a safe, natural option guided by our dermatologists with attentive aftercare.",
+      "Our regenerative protocols use your own platelet-rich plasma and growth factor concentrate to stimulate hair follicles, slow hair loss and rejuvenate facial skin - a safe, natural option guided by our dermatologists with attentive aftercare.",
     badge: "Regenerative Care",
     badgeColor: "bg-accent text-accent-foreground border-border",
   },

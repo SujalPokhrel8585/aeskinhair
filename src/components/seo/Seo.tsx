@@ -69,7 +69,7 @@ export function Seo({
     upsertMeta(
       "property",
       "og:image:alt",
-      `${CLINIC_INFO.name} — Skin & Hair Clinic, Samakhushi, Kathmandu`,
+      `${CLINIC_INFO.name} - Skin & Hair Clinic, Samakhushi, Kathmandu`,
     );
     upsertMeta("name", "twitter:card", "summary_large_image");
     upsertMeta("name", "twitter:title", title);

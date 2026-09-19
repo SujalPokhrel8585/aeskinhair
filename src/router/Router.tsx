@@ -15,8 +15,8 @@ const PrivacyPolicyPage = lazy(() => import("@/features/legal/PrivacyPolicyPage"
 const TermsPage = lazy(() => import("@/features/legal/TermsPage"));
 
 /* Scroll to the top on EVERY navigation (footer/nav links, mobile
-   included). location.key changes even when the path stays the same —
-   e.g. clicking a footer link to the page you are already on — so those
+   included). location.key changes even when the path stays the same -
+   e.g. clicking a footer link to the page you are already on - so those
    clicks scroll to the top too. Hash links like /#testimonials handle
    their own scrolling. */
 function ScrollToTop() {

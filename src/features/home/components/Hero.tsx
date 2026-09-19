@@ -29,7 +29,7 @@ import { GOOGLE_REVIEWS_URL } from "@/features/home/data/testimonialsData";
 const HeroCanvas = lazy(() => import("@/components/three/HeroCanvas"));
 
 /* Static stethoscope for low-tier devices (old phones, data-saver, reduced
-   motion): no WebGL, no three.js chunk, no GLB download — just a
+   motion): no WebGL, no three.js chunk, no GLB download - just a
    pre-rendered photo of the model (theme-aware) with a gentle CSS float. */
 function HeroStaticModel() {
   const { theme } = useTheme();
@@ -50,7 +50,7 @@ function HeroStaticModel() {
 /**
  * Crash-proofing for the 3D hero. Without an error boundary here, ANY failure
  * in the three.js stack (WebGL context loss, HDR/GLB load failure, shader
- * compile error) propagated to the root and unmounted the ENTIRE page — the
+ * compile error) propagated to the root and unmounted the ENTIRE page - the
  * "homepage loads for a second, then disappears" bug. Now any failure degrades
  * to the same static model used on low-tier devices, and the rest of the page
  * keeps working.
@@ -66,7 +66,7 @@ class HeroErrorBoundary extends Component<
   }
 
   componentDidCatch(error: unknown) {
-    console.error("Hero 3D canvas failed — falling back to static model:", error);
+    console.error("Hero 3D canvas failed - falling back to static model:", error);
   }
 
   render() {
@@ -75,7 +75,7 @@ class HeroErrorBoundary extends Component<
 }
 
 export default function Hero() {
-  // Live open/closed badge, recomputed every minute (Nepal Time, 10 AM–6 PM)
+  // Live open/closed badge, recomputed every minute (Nepal Time, 10 AM-6 PM)
   const [status, setStatus] = useState(() => getClinicStatus());
   // The card flips between the status face and "Book Online" every 3s
   const [flipped, setFlipped] = useState(false);
@@ -135,7 +135,7 @@ export default function Hero() {
                 care, anti-aging Botox, and regenerative PRP & GFC hair care.
               </p>
 
-              {/* Action Buttons – now using Link */}
+              {/* Action Buttons - now using Link */}
               <div className="mb-3 flex flex-wrap gap-3">
                 <Link
                   to="/book"

@@ -7,7 +7,7 @@
 //   devices. Do not use.
 // - Android `intent://send/<number>…` URIs don't match how modern WhatsApp
 //   handles the `whatsapp://` scheme (the phone belongs in the query, not
-//   the path) — taps do nothing on real devices. Do not use.
+//   the path) - taps do nothing on real devices. Do not use.
 // - `https://wa.me/…` is the official Click-to-Chat link and carries the
 //   text reliably. On phones it hands off to the installed app when
 //   navigated in the SAME tab; new-tab opens (target=_blank / window.open)
@@ -33,7 +33,7 @@ export function whatsappUrl(number: string, text = ""): string {
  * Props to spread on an <a> that opens WhatsApp. On phones the link is
  * same-tab AND the click is routed through openWhatsApp(): some mobile
  * browsers (Brave on iOS, for one) break the universal-link hand-off for
- * direct wa.me taps — they load the api.whatsapp.com web page instead, whose
+ * direct wa.me taps - they load the api.whatsapp.com web page instead, whose
  * "Open WhatsApp" button is then blocked too. Navigating via location.href
  * from the click handler (the same path the booking/contact forms use, which
  * is verified working on those devices) opens the app reliably. Desktop keeps

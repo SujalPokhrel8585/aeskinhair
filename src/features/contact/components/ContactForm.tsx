@@ -193,7 +193,7 @@ export function ContactForm() {
                 </div>
               </div>
 
-              {/* Email – optional (WhatsApp-first: phone is the primary way
+              {/* Email - optional (WhatsApp-first: phone is the primary way
                   we reach people back) */}
               <div className="space-y-1.5">
                 <label

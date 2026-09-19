@@ -303,7 +303,7 @@ export const FAQ_DATA: FaqDataMap = {
     {
       question: "Do I need a consultation before a treatment",
       answer:
-        "Yes, every procedure — from laser and peels to Botox and PRP — starts with a consultation so the dermatologist can confirm the right fit for your skin type and goals, and screen for any reason to avoid the treatment.",
+        "Yes, every procedure - from laser and peels to Botox and PRP - starts with a consultation so the dermatologist can confirm the right fit for your skin type and goals, and screen for any reason to avoid the treatment.",
     },
     {
       question: "How long is a typical consultation in Kathmandu",
@@ -316,7 +316,7 @@ export const FAQ_DATA: FaqDataMap = {
     {
       question: "Which scars can be treated with scar revision",
       answer:
-        "Acne scars, surgical scars, burn scars and old injury scars all respond well. The choice of tool — laser, microneedling, subcision or injections — depends on whether the scar is shallow, deep, raised, or darkened.",
+        "Acne scars, surgical scars, burn scars and old injury scars all respond well. The choice of tool - laser, microneedling, subcision or injections - depends on whether the scar is shallow, deep, raised, or darkened.",
     },
     {
       question: "How many sessions does scar revision need",
@@ -393,7 +393,7 @@ export const FAQ_DATA: FaqDataMap = {
     {
       question: "How long does vitiligo treatment take",
       answer:
-        "Repigmentation is gradual — most patients see the first specks of colour after two to three months, with meaningful coverage building over six to twelve months of regular sessions.",
+        "Repigmentation is gradual - most patients see the first specks of colour after two to three months, with meaningful coverage building over six to twelve months of regular sessions.",
     },
     {
       question: "Is phototherapy safe for skin in Nepal's climate",

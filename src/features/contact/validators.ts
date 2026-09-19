@@ -11,7 +11,7 @@ export const validators: Record<string, (v: string) => string> = {
     return "";
   },
   email: (v) => {
-    if (!v.trim()) return ""; // optional — but if given, must be valid
+    if (!v.trim()) return ""; // optional - but if given, must be valid
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(v.trim()))
       return "Please enter a valid email address (e.g. you@example.com).";

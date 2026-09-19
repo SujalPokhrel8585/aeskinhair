@@ -30,7 +30,7 @@ const COUNT = homepageTestimonials.length;
 const TAU = Math.PI * 2;
 
 /* Renders the reviewer's photo, falling back to the branded initials avatar if
-   the image is missing or fails to load (e.g. a 404 on a new host) — so the
+   the image is missing or fails to load (e.g. a 404 on a new host) - so the
    orbit never shows an empty broken circle after a deployment. */
 function ReviewerAvatar({
   item,

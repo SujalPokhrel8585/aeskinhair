@@ -2,7 +2,7 @@
 // Strategy:
 //   - Static assets (JS, CSS, images, fonts, 3D models): cache-first
 //   - HTML pages: network-first, fallback to cached index.html (SPA navigation)
-//   - Non-page requests offline: plain 503 (NEVER html — html poisoned the 3D loader)
+//   - Non-page requests offline: plain 503 (NEVER html - html poisoned the 3D loader)
 //   - Version hash changes on every build → old caches auto-purged
 // Bumped to v3: the hero HDR is now self-hosted (/hdri/potsdamer_platz_1k.hdr)
 // and cached cache-first like the other 3D assets; v2 caches (from before the

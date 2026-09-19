@@ -8,6 +8,7 @@ import {
 } from "lucide-react";
 
 import { CLINIC_INFO } from "@/constants";
+import { DOCTOR_TEAM } from "@/features/about/data";
 
 const STATS = [
   { icon: Clock, value: "10+ Years", label: "Clinical Experience" },
@@ -35,7 +36,7 @@ export default function WhyChooseUs() {
 
         {/* Main Grid: Doctor Profile + Proof of Results */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-          {/* Doctor Bio Card (Authority Builder) — both dermatologists */}
+          {/* Doctor Bio Card (Authority Builder) - both dermatologists */}
           <div className="lg:col-span-7 bg-card rounded-3xl p-8 shadow-sm border border-border flex flex-col justify-between">
             <div>
               <span className="text-xs font-semibold text-accent-foreground uppercase tracking-wider">
@@ -45,9 +46,11 @@ export default function WhyChooseUs() {
                 <div className="flex items-start gap-4">
                   <div className="relative w-20 h-20 rounded-2xl overflow-hidden bg-muted shrink-0 shadow-inner">
                     <img
-                      src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?q=80&w=400&auto=format&fit=crop"
+                      src={DOCTOR_TEAM[0].image}
                       alt="Dr. Shraddha Chudal"
-                      className="w-full h-full object-cover"
+                      loading="lazy"
+                      decoding="async"
+                      className="w-full h-full object-cover object-top"
                     />
                   </div>
                   <div>
@@ -66,9 +69,11 @@ export default function WhyChooseUs() {
                 <div className="flex items-start gap-4">
                   <div className="relative w-20 h-20 rounded-2xl overflow-hidden bg-muted shrink-0 shadow-inner">
                     <img
-                      src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?q=80&w=400&auto=format&fit=crop"
+                      src={DOCTOR_TEAM[1].image}
                       alt="Dr. Pramesh Koirala"
-                      className="w-full h-full object-cover"
+                      loading="lazy"
+                      decoding="async"
+                      className="w-full h-full object-cover object-top"
                     />
                   </div>
                   <div>
@@ -88,7 +93,7 @@ export default function WhyChooseUs() {
 
               <p className="text-muted-foreground text-sm leading-relaxed mb-6">
                 Dr. Shraddha Chudal and Dr. Pramesh Koirala are our consultant
-                dermatologists for medical and cosmetic dermatology — from acne
+                dermatologists for medical and cosmetic dermatology - from acne
                 and pigmentation care to HydraFacial, chemical peels, PRP & GFC
                 therapy, and anti-aging treatments tailored to Nepali skin.
               </p>

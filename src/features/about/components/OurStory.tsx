@@ -39,10 +39,10 @@ export default function OurStory() {
               rather than one-size-fits-all fixes.
             </p>
             <p>
-              Today, AestheticEssence specializes in advanced skin treatments —
+              Today, AestheticEssence specializes in advanced skin treatments -
               medical hydrafacials, PRP &amp; GFC regenerative therapy,
               personalized acne and scar correction, melasma control, laser
-              procedures, and non-surgical facial rejuvenation — serving both
+              procedures, and non-surgical facial rejuvenation - serving both
               local residents and international visitors with uncompromising
               standards.
             </p>
@@ -118,10 +118,10 @@ export default function OurStory() {
                 </div>
                 <div>
                   <p className="text-xs font-semibold text-primary-foreground/70">
-                    Open Sun – Fri
+                    Open Sun - Fri
                   </p>
                   <p className="text-sm font-bold text-primary-foreground">
-                    11:00 AM – 6:00 PM
+                    11:00 AM - 6:00 PM
                   </p>
                 </div>
               </div>

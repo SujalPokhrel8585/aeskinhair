@@ -30,13 +30,13 @@ export const STATIC_SEO: Record<string, SeoMeta> = {
   "/services": {
     title: `Skin & Hair Treatments in Kathmandu | ${BRAND}`,
     description:
-      "Medical-grade dermatology treatments in Samakhushi, Kathmandu — HydraFacial, acne & scar care, laser hair reduction, Botox & fillers, PRP & GFC, melasma treatment and medi peels.",
+      "Medical-grade dermatology treatments in Samakhushi, Kathmandu - HydraFacial, acne & scar care, laser hair reduction, Botox & fillers, PRP & GFC, melasma treatment and medi peels.",
     path: "/services",
   },
   "/doctors": {
     title: `Our Dermatologists | ${BRAND}`,
     description:
-      "Meet our NMC-registered consultant dermatologists in Samakhushi, Kathmandu — Dr. Shraddha Chudal and Dr. Pramesh Koirala.",
+      "Meet our NMC-registered consultant dermatologists in Samakhushi, Kathmandu - Dr. Shraddha Chudal and Dr. Pramesh Koirala.",
     path: "/doctors",
   },
   "/about": {
@@ -54,7 +54,7 @@ export const STATIC_SEO: Record<string, SeoMeta> = {
   "/contact": {
     title: `Contact & Location | ${BRAND}`,
     description:
-      "Visit us at City Square Mall (3rd Floor), Samakhushi Road, Kathmandu. Call +977 976-7648659 or 01-4978659, or message us on WhatsApp — we typically respond within 24 hours.",
+      "Visit us at City Square Mall (3rd Floor), Samakhushi Road, Kathmandu. Call +977 976-7648659 or 01-4978659, or message us on WhatsApp - we typically respond within 24 hours.",
     path: "/contact",
   },
   "/book": {

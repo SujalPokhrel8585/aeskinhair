@@ -118,7 +118,7 @@ export default function ServicePage() {
       </div>
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-16 md:pt-12 md:pb-24">
-        {/* Breadcrumb trail — visible for users, BreadcrumbList JSON-LD for
+        {/* Breadcrumb trail - visible for users, BreadcrumbList JSON-LD for
             search engines (internal-linking SEO signal) */}
         <nav aria-label="Breadcrumb" className="mb-6 text-sm text-muted-foreground">
           <ol className="flex flex-wrap items-center gap-2">

@@ -44,7 +44,7 @@ export const BeforeAfter = () => {
             beforeSrcset={beforeSrcset}
             afterSrcset={afterSrcset}
             // Container is max-w-md (448 px) inside padded sections, so the
-            // slot never exceeds 448 px — this keeps desktop honest and lets
+            // slot never exceeds 448 px - this keeps desktop honest and lets
             // low-DPR screens pick the 400w variant.
             sizes="(max-width: 640px) calc(100vw - 3rem), 448px"
             beforeAlt="Skin before dermatology treatment at AestheticEssence Clinic"

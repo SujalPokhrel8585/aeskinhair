@@ -70,7 +70,7 @@ const INITIAL_FORM: BookingFormData = {
 // ── Clinic hours (single source: src/lib/clinicStatus.ts) ──
 const OPEN_TIME = `${String(CLINIC_OPEN_HOUR).padStart(2, "0")}:00`; // "11:00"
 const CLOSE_TIME = `${String(CLINIC_CLOSE_HOUR).padStart(2, "0")}:00`; // "18:00"
-const HOURS_LABEL = `${formatHour12(CLINIC_OPEN_HOUR)} – ${formatHour12(CLINIC_CLOSE_HOUR)}`;
+const HOURS_LABEL = `${formatHour12(CLINIC_OPEN_HOUR)} - ${formatHour12(CLINIC_CLOSE_HOUR)}`;
 
 // ── Validation ──
 const validators: Record<string, (v: string) => string> = {
@@ -107,7 +107,7 @@ const validators: Record<string, (v: string) => string> = {
     return "";
   },
   preferredTime: (v) => {
-    if (!v) return ""; // optional — but if given, must be within clinic hours
+    if (!v) return ""; // optional - but if given, must be within clinic hours
     const [h, m] = v.split(":").map(Number);
     const minutes = h * 60 + m;
     if (
@@ -115,7 +115,7 @@ const validators: Record<string, (v: string) => string> = {
       minutes < CLINIC_OPEN_HOUR * 60 ||
       minutes > CLINIC_CLOSE_HOUR * 60
     ) {
-      return `Clinic hours are ${HOURS_LABEL} (Sun–Fri). Please pick a time within them.`;
+      return `Clinic hours are ${HOURS_LABEL} (Sun-Fri). Please pick a time within them.`;
     }
     return "";
   },
@@ -124,7 +124,7 @@ const validators: Record<string, (v: string) => string> = {
 
 function buildWhatsAppMessage(form: BookingFormData): string {
   const lines = [
-    `New Appointment Request – AestheticEssence Clinic`,
+    `New Appointment Request - AestheticEssence Clinic`,
     ``,
     `Name: ${form.name}`,
     `Phone: ${form.phone}`,
@@ -279,7 +279,7 @@ export default function BookAppointmentPage() {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-          {/* LEFT – Info */}
+          {/* LEFT - Info */}
           <div className="lg:col-span-5 flex flex-col">
             <div className="bg-card rounded-3xl p-7 sm:p-9 border border-border shadow-lg shadow-black/5 flex flex-col justify-between h-full">
               <div>
@@ -360,7 +360,7 @@ export default function BookAppointmentPage() {
             </div>
           </div>
 
-          {/* RIGHT – Form */}
+          {/* RIGHT - Form */}
           <div ref={formRef} className="lg:col-span-7 flex flex-col justify-center scroll-mt-24">
             <div className="bg-card rounded-3xl p-7 sm:p-9 border border-border shadow-lg shadow-black/5 w-full">
               <AnimatePresence mode="wait">
@@ -552,7 +552,7 @@ export default function BookAppointmentPage() {
                         )}
                       </div>
 
-                      {/* Preferred Doctor – NEW */}
+                      {/* Preferred Doctor - NEW */}
                       <div className="space-y-1.5">
                         <label
                           htmlFor="preferredDoctor"
@@ -643,7 +643,7 @@ export default function BookAppointmentPage() {
                             </p>
                           ) : (
                             <p className="text-[11px] text-muted-foreground mt-1">
-                              Clinic hours: {HOURS_LABEL} (Sun–Fri)
+                              Clinic hours: {HOURS_LABEL} (Sun-Fri)
                             </p>
                           )}
                         </div>

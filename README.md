@@ -137,7 +137,7 @@ Each page renders `<Seo>` (`src/components/seo/Seo.tsx`) with metadata from `src
 `index.html` preloads the hero fallback images by their content-hashed names (e.g. `/assets/stethoscope-light-BailOwvS.webp`). If you replace those images, copy the new hashed names from the build output into `index.html`, otherwise the preloads 404 silently.
 
 ### 10. Hosting configs
-`vercel.json` (rewrite to `/index.html`), `public/_redirects` + `public/_headers` (Netlify/Cloudflare Pages) and the `preview-security-headers` plugin in `vite.config.ts` are included — security headers + CSP are configured in all three and must stay in sync (see HANDOVER §5.5). Any static host works as long as SPA fallback is configured. `vite preview` allows arbitrary hosts (`preview.allowedHosts`) for tunnel testing.
+`vercel.json` (rewrite to `/index.html`), `public/_redirects` + `public/_headers` (Netlify/Cloudflare Pages) and the `preview-security-headers` plugin in `vite.config.ts` are included - security headers + CSP are configured in all three and must stay in sync (see HANDOVER §5.5). Any static host works as long as SPA fallback is configured. `vite preview` allows arbitrary hosts (`preview.allowedHosts`) for tunnel testing.
 
 ## Editing guide (where to change what)
 
@@ -146,7 +146,7 @@ Each page renders `<Seo>` (`src/components/seo/Seo.tsx`) with metadata from `src
 | Clinic name, phone, address, socials, WhatsApp | `src/constants/clinic.ts` (single source used by navbar, footer, forms, schema, service worker) |
 | Nav links, footer menus | `src/constants/navigation.ts` |
 | Treatments (cards, detail pages, dropdown, footer, booking select) | `src/features/services/data/servicesData.ts` |
-| Doctors | `src/features/doctors/data/doctorsData.ts` (also feeds the booking select + Physician schema) |
+| Doctors | `src/features/doctors/data/doctorsData.ts` (Doctors page; also feeds the booking select + Physician schema) AND `src/features/about/data/doctorTeamData.ts` (homepage flipbook + About team + About why-choose cards). Keep the two `image` URLs identical |
 | Testimonials / reviews | `src/features/home/data/testimonialsData.ts` |
 | SEO copy | `src/constants/seo.ts` (+ per-page `<Seo>` props) |
 | Business hours | `src/lib/clinicStatus.ts` (+ `businessHours` in `clinic.ts`) |
@@ -168,7 +168,7 @@ Deploy `dist/` to any static host with SPA fallback (configs included for Vercel
 > followed, regardless of whether or not an asset matches the incoming
 > request"), so the catch-all shadows every JS/CSS/image file with index.html
 > and produces a permanent blank page. Pages serves SPAs automatically when no
-> top-level `404.html` exists — deep links like `/services/hydrafacial` work
+> top-level `404.html` exists - deep links like `/services/hydrafacial` work
 > with **zero redirect config**. The build emits only `index.html` and
 > `offline.html`; never add a `404.html`. `public/_headers` (CSP etc.) IS read
 > by Cloudflare Pages and should be deployed.
@@ -177,14 +177,14 @@ Deploy `dist/` to any static host with SPA fallback (configs included for Vercel
 
 | # | Task | Why / how |
 |---|------|-----------|
-| 1 | **Renew the `.com.np` domain EVERY year** (register.com.np / Mercantile) — set a phone + calendar reminder 30 days before expiry | Free `.com.np` domains expire yearly; expiry = site down + DNS gone. This is the **#1 "site suddenly dead" cause**. Renewal needs an NMC registration / citizenship document. |
+| 1 | **Renew the `.com.np` domain EVERY year** (register.com.np / Mercantile) - set a phone + calendar reminder 30 days before expiry | Free `.com.np` domains expire yearly; expiry = site down + DNS gone. This is the **#1 "site suddenly dead" cause**. Renewal needs an NMC registration / citizenship document. |
 | 2 | **Point nameservers to Cloudflare** at registration, then add the domain to the Cloudflare Pages project (Custom domains) | Required for Pages + HTTPS on the custom domain. |
-| 3 | **Apex ↔ www redirect** — one Cloudflare Redirect Rule: `aestheticessence.com.np/*` → `https://www.aestheticessence.com.np/$1` (301) | Canonicals/sitemap/og:image all use `https://www.aestheticessence.com.np`; keep exactly one canonical origin. |
-| 4 | **Domain agreement check** — `siteUrl` in `src/constants/clinic.ts`, `index.html` (canonical + og:image), `public/robots.txt`, `public/sitemap.xml` must all use the SAME origin | If the final domain name changes, update all four together (HANDOVER §7). |
-| 5 | **Analytics (optional, zero cost)** — Cloudflare Pages → project → Metrics → **Enable** under Web Analytics. Free on all plans, cookieless, no consent banner needed, zero code changes, works on any hostname (apex or www). **One required companion change:** the beacon loads from `https://static.cloudflareinsights.com`, which the CSP blocks by default. When enabling, add `https://static.cloudflareinsights.com` to **both** `script-src` and `connect-src` in `public/_headers`, `vercel.json` AND `vite.config.ts` (keep the three in sync) — otherwise the beacon is silently blocked and stats stay empty (the site itself is unaffected). | Visibility into visitors without breaking CSP or privacy. |
-| 6 | **Finalizing images** — the 12 `public/services/*.webp` files are staged drop-in replacements for the ~49 Unsplash hotlinks in `servicesData.ts`, `galleryData.ts`, `doctorsData.ts`, `facilitiesTechData.ts`, `WhyChooseUs.tsx`, `BeforeAfter.tsx` | Unsplash hotlinks work today but can break if Unsplash removes a photo ID. Download real clinic photos, replace the URLs with `/services/<id>.webp` paths, run `npm run compress:images`. |
-| 7 | **Placeholder imagery** — every doctor photo, facility card and gallery entry currently uses an Unsplash placeholder | Swap each Unsplash URL for the real clinic photo when content is finalized (see item 6). |
-| 8 | **`npm run build` before every deploy** — it type-checks everything; then spot-check `npm run preview` | The only safety net besides lint. |
+| 3 | **Apex ↔ www redirect** - one Cloudflare Redirect Rule: `aestheticessence.com.np/*` → `https://www.aestheticessence.com.np/$1` (301) | Canonicals/sitemap/og:image all use `https://www.aestheticessence.com.np`; keep exactly one canonical origin. |
+| 4 | **Domain agreement check** - `siteUrl` in `src/constants/clinic.ts`, `index.html` (canonical + og:image), `public/robots.txt`, `public/sitemap.xml` must all use the SAME origin | If the final domain name changes, update all four together (HANDOVER §7). |
+| 5 | **Analytics (optional, zero cost)** - Cloudflare Pages → project → Metrics → **Enable** under Web Analytics. Free on all plans, cookieless, no consent banner needed, zero code changes, works on any hostname (apex or www). **One required companion change:** the beacon loads from `https://static.cloudflareinsights.com`, which the CSP blocks by default. When enabling, add `https://static.cloudflareinsights.com` to **both** `script-src` and `connect-src` in `public/_headers`, `vercel.json` AND `vite.config.ts` (keep the three in sync) - otherwise the beacon is silently blocked and stats stay empty (the site itself is unaffected). | Visibility into visitors without breaking CSP or privacy. |
+| 6 | **Finalizing images** - the 12 `public/services/*.webp` files are staged drop-in replacements for the ~49 Unsplash hotlinks in `servicesData.ts`, `galleryData.ts`, `doctorsData.ts`, `facilitiesTechData.ts`, `WhyChooseUs.tsx`, `BeforeAfter.tsx` | Unsplash hotlinks work today but can break if Unsplash removes a photo ID. Download real clinic photos, replace the URLs with `/services/<id>.webp` paths, run `npm run compress:images`. |
+| 7 | **Placeholder imagery** - every doctor photo, facility card and gallery entry currently uses an Unsplash placeholder | Swap each Unsplash URL for the real clinic photo when content is finalized (see item 6). |
+| 8 | **`npm run build` before every deploy** - it type-checks everything; then spot-check `npm run preview` | The only safety net besides lint. |
 
 ## License
 

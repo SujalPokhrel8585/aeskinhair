@@ -51,7 +51,7 @@ export const BeforeAfterSlider = React.forwardRef<
 
     // pointermove fires faster than the display refreshes (high-rate
     // touchscreens can emit hundreds of events/second). Coalesce them into a
-    // single state update per animation frame — identical behaviour, but the
+    // single state update per animation frame - identical behaviour, but the
     // React re-render (and clip-path repaint) runs at most once per frame.
     const pendingClientX = React.useRef<number | null>(null);
     const rafId = React.useRef<number | null>(null);

@@ -15,11 +15,11 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
 );
 
 // Register service worker for offline support + instant repeat visits.
-// Only in production — dev mode would cache HMR assets and break reloads.
+// Only in production - dev mode would cache HMR assets and break reloads.
 if ("serviceWorker" in navigator && import.meta.env.PROD) {
   window.addEventListener("load", () => {
     navigator.serviceWorker.register("/sw.js").catch(() => {
-      /* SW registration failed — site still works, just no offline caching */
+      /* SW registration failed - site still works, just no offline caching */
     });
   });
 }

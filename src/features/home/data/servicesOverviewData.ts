@@ -28,7 +28,7 @@ export const SERVICES_OVERVIEW: ServiceItem[] = [
   {
     id: "botox",
     title: "Aesthetic Injections",
-    valueProp: "Botox & Fillers — Smooth & Restore Contour",
+    valueProp: "Botox & Fillers - Smooth & Restore Contour",
     icon: ShieldCheck,
   },
   {

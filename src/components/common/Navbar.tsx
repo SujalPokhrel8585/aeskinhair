@@ -135,7 +135,7 @@ export default function Navbar() {
                 </NavigationMenuItem>
               );
             })}
-            {/* Services Dropdown – click label → /services, hover → sub-links */}
+            {/* Services Dropdown - click label → /services, hover → sub-links */}
             <NavigationMenuItem>
               <NavigationMenuTrigger className={navLinkClasses}>
                 <Link

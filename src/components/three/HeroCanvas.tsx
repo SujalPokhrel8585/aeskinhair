@@ -9,7 +9,7 @@ import { getPerfTier } from "@/lib/deviceCapability";
  * of the main bundle and the page paints first.
  *
  * Adaptive quality: on weaker phones (see lib/deviceCapability) we keep the
- * model fully interactive but render it cheaper — lower dpr, no shadows and
+ * model fully interactive but render it cheaper - lower dpr, no shadows and
  * no antialiasing. Powerful devices get the exact same look as before.
  */
 export default function HeroCanvas() {
